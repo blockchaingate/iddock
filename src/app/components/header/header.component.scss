@@ -1,0 +1,34 @@
+//menu
+
+.menu {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 999;
+    width: 100%;
+    background-color: #ffffffcc;
+
+    ul {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 0;
+        padding: 10px 20px;
+    }
+
+    li {
+        list-style: none;
+        padding: 10px;
+
+        a {
+            text-decoration: none;
+            color: #777;
+            transition: all 0.3s ease-out;
+        }
+
+        a:hover {
+            color: cornflowerblue;
+        }
+    }
+}
+
+//menu end
