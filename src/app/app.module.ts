@@ -19,12 +19,14 @@ import { UtilService } from './services/util.service';
 import { HttpService } from './services/http.service';
 import { IddockService } from './services/iddock.service';
 import { FormsModule } from '@angular/forms';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 // import { RegisterComponent } from './components/register/register.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
+import { DetailComponent } from './components/detail/detail.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { UpdateInfoComponent } from './components/update-info/update-info.compon
     HeaderComponent,
     HomeComponent,
     LoginComponent,
+    DetailComponent,
     // RegisterComponent,
     AddInfoComponent,
     UpdateInfoComponent
@@ -45,6 +48,8 @@ import { UpdateInfoComponent } from './components/update-info/update-info.compon
     BrowserAnimationsModule,
     RegisterModule,
     FormsModule,
+    ModalModule.forRoot(),
+    AlertModule.forRoot(),
     HttpClientModule
   ],
   providers: [

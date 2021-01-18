@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 // import { RegisterComponent } from './components/register/register.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
+import { DetailComponent } from './components/detail/detail.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   // { path: 'register', component: RegisterComponent },
   { path: 'add-info', component: AddInfoComponent },
+  { path: 'detail/:id', component: DetailComponent },
   { path: 'update-info', component: UpdateInfoComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

@@ -4,6 +4,11 @@
   </div> -->
 
   <div class="container">
+    <div class="row justify-content-center py-2">
+      <div class="col-md-8 col-sm-12">
+        My ID: {{walletAddress}}
+      </div>
+    </div>
     <div class="row justify-content-center">
 
       <div class="col-md-8 col-sm-12">
@@ -12,7 +17,7 @@
         <form>
           <div class="input-field second-wrap">
             <div class="input-select">
-              <select data-trigger="" name="choices-single" class="selectCategory">
+              <select data-trigger="" name="choices-single" class="selectCategory" [(ngModel)]="type">
                 <option placeholder="">Select</option>
                 <option>People</option>
                 <option>Organization</option>
@@ -41,28 +46,28 @@
 
             </div>
           </div>
-          <div class="input-group mb-3 row">
+          <div class="input-group mb-3 row" *ngFor="let item of nameValuePairs; let i = index;">
             <div class="col-md-3">
-              <input type="text" class="form-control" placeholder="Name" aria-label="Username">
+              <input type="text" class="form-control" placeholder="Name" aria-label="Name" [(ngModel)]="nameValuePairs[i].name">
 
             </div>
             <div class="col-md-4">
-              <input type="text" class="form-control" placeholder="Value" aria-label="Server">
+              <input type="text" class="form-control" placeholder="Value" aria-label="Value" [(ngModel)]="nameValuePairs[i].value">
             </div>
             <div class="col-md-5 select-visiable">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions{{i}}" (click)="item.type=1" [checked]="item.type==1">
                 <label class="form-check-label" for="inlineRadio1">Public</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions{{i}}" (click)="item.type=2" [checked]="item.type==2">
                 <label class="form-check-label" for="inlineRadio2">Encrypted</label>
               </div>
 
-
+              <button class="btn btn-primary" type="button" *ngIf="i==nameValuePairs.length - 1" (click)="addItem()">+</button>
             </div>
           </div>
-
+          <!--
           <div class="input-group mb-3 row">
             <div class="col-md-3">
               <input type="text" class="form-control" placeholder="Name" aria-label="Username">
@@ -85,8 +90,9 @@
             </div>
             
           </div>
+        -->
           <div>
-            <button type="button" class="btn btn-primary add-btn">ADD NAME & VALUE</button>
+            <button type="button" class="btn btn-primary add-btn" (click)="openModal(template)">ADD NAME & VALUE</button>
           </div>
         </div>
 
@@ -95,3 +101,26 @@
     </div>
     
   </div>
+
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Password</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="py-2">
+        <input type="text" class="form-control" placeholder="Please enter password" type="password" aria-label="Password" [(ngModel)]="password">
+      </div>
+        
+      <div class="py-2">
+        <button class="btn btn-primary" type="button" (click)="confirmPassword()">Confirm</button>
+      </div>
+        
+      <alert type="danger" *ngIf="passwordWrong">
+        Password is wrong.
+      </alert>
+    </div>
+  </ng-template>

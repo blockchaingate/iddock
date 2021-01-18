@@ -48,7 +48,7 @@ export class Web3Service {
       "stateMutability": "nonpayable",
       "type": "function"
     };  
-    const params = [web3.utils.asciiToHex(sequence), hashData];
+    const params = [sequence, hashData];
 
     console.log('params=', params);
     const abiHex = this.getGeneralFunctionABI(func, params);
