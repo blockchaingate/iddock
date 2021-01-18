@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import  {RegisterModule} from './modules/register/register.module'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-
+    RegisterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

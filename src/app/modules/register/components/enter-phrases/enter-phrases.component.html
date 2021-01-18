@@ -1,0 +1,42 @@
+<div class="container enter-phrases-page">
+  <div class="row justify-content-center">
+
+    <div class="col-md-8 col-sm-12 text-white">
+
+      <h1>Register</h1>
+      <div  class="">
+        <div  class="header row">
+          <h3 >Setp 2: Verify Mnemonics</h3>
+        </div>
+        <div  class="row textarea text-light fxHide-sm">
+          <!-- <div  class="col-md-2 col-xs-12"><img 
+                src="/images/icons/lighting.png" width="100%"></div> -->
+          <div  > To make sure that you copied the mnemonics accurately, please enter it in order for verification.
+          </div>
+        </div>
+        <div  class="row words center">
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted"
+            *ngFor="let item of [].constructor(12); let i = index">
+          
+            <div  class="numbox">{{i +1}}.</div>
+            <div  class="word"><input class="word-field" type="text"></div>
+          </div>
+          <!---->
+        </div>
+      </div>
+      <br>
+      <!-- <div class="justify-content-end">
+        <a href='/write-phrases'> <button type="button" class="btn btn-primary">Back</button></a>
+      </div> -->
+      <div class="btn-group row">
+        <!-- <a href='/enter-phrases'> <button type="button" class="btn btn-primary">Back</button></a> -->
+        <a href='/set-password' id="next"> <button type="button" class="btn btn-primary">Next</button></a>
+      </div>
+      <!-- <br />
+      <hr />
+      <br />
+      <div><a href='/login'>Already have mnemonics? Restore</a></div> -->
+    </div>
+
+  </div>
+</div>
