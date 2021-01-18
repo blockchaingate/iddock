@@ -15,6 +15,7 @@ import { KanbanService } from './services/kanban.service';
 import { StorageService } from './services/storage.service';
 import { UtilService } from './services/util.service';
 import { HttpService } from './services/http.service';
+import { IddockService } from './services/iddock.service';
 import { FormsModule } from '@angular/forms';
 
 import { HomeComponent } from './components/home/home.component';
@@ -51,7 +52,8 @@ import { UpdateInfoComponent } from './components/update-info/update-info.compon
     KanbanService,
     StorageService,
     UtilService,
-    HttpService
+    HttpService,
+    IddockService
   ],
   bootstrap: [AppComponent]
 })
