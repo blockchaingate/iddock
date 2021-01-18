@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import  {RegisterModule} from './modules/register/register.module'
 //import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
@@ -20,7 +22,7 @@ import { FormsModule } from '@angular/forms';
 
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+// import { RegisterComponent } from './components/register/register.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
 
@@ -30,7 +32,7 @@ import { UpdateInfoComponent } from './components/update-info/update-info.compon
     HeaderComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent,
+    // RegisterComponent,
     AddInfoComponent,
     UpdateInfoComponent
     // BrowserAnimationsModule,
@@ -41,6 +43,7 @@ import { UpdateInfoComponent } from './components/update-info/update-info.compon
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    RegisterModule,
     FormsModule,
     HttpClientModule
   ],
