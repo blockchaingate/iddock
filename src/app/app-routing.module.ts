@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   // { path: 'register', component: RegisterComponent },
   { path: 'add-info', component: AddInfoComponent },
-  { path: 'detail/:id', component: DetailComponent },
+  { path: 'detail/:type/:id', component: DetailComponent },
   { path: 'update-info', component: UpdateInfoComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

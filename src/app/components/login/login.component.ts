@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 import { WalletService } from '../../services/wallet.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,6 +16,8 @@ export class LoginComponent implements OnInit {
   mnemonic: string;
 
   constructor(
+    private route: Router,
+    private localSt: LocalStorage, 
     private walletServ: WalletService
   ) { }
 
@@ -24,8 +29,26 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    console.log('this.mnemonic=', this.mnemonic);
     const wallet = this.walletServ.generateWallet(this.password, this.name, this.mnemonic);
-    console.log('wallet=', wallet);
+    if (!wallet) {
+      console.log('Error occured, please try again.');
+    } else {
+        this.localSt.getItem('ecomwallets').subscribe((wallets: any) => {
+            if (!wallets) {
+              wallets = {
+                currentIndex: -1,
+                items: []
+              };
+            }
+            if (wallets.items.indexOf(wallet) < 0) {
+              wallets.items.push(wallet);
+              wallets.currentIndex ++;
+            }
+            this.localSt.setItem('ecomwallets', wallets).subscribe(() => {
+                this.route.navigate(['/add-info']);
+            });
+        });
+
+    }  
   }
 }

@@ -9,13 +9,14 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class DetailComponent implements OnInit {
     id: string;
+    type: string;
     data: any;
     constructor(private route: ActivatedRoute, private iddockServ: IddockService) { }
     ngOnInit() {
-
+      this.type = this.route.snapshot.paramMap.get('type');
       this.id = this.route.snapshot.paramMap.get('id');
       console.log('thisid=', this.id);
-      this.iddockServ.findAll('', this.id).subscribe(
+      this.iddockServ.getDetail(this.type, this.id).subscribe(
         (ret: any) => {
           console.log('rettttt=', ret);
           if(ret && ret.ok) {

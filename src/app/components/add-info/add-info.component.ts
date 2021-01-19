@@ -17,6 +17,9 @@ export class AddInfoComponent implements OnInit {
   type: string;
   password: string;
   id: string;
+  myid: string;
+  rfid: string;
+  typeMissing: boolean;
   walletAddress: string;
   nameValuePairs: any;
   modalRef: BsModalRef;
@@ -28,6 +31,8 @@ export class AddInfoComponent implements OnInit {
     private utilServ: UtilService) { }
 
   ngOnInit() {
+    this.type = 'people';
+    this.typeMissing = false;
     this.passwordWrong = false;
     this.nameValuePairs = [
       {
@@ -70,10 +75,15 @@ export class AddInfoComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
+    if(!this.type) {
+      this.typeMissing = true;
+      return;
+    }    
     this.modalRef = this.modalService.show(template);
   }
 
   async add() {
+
     const nvs = [];
     for(let i=0;i<this.nameValuePairs.length;i++) {
       const item = this.nameValuePairs[i];
@@ -89,9 +99,13 @@ export class AddInfoComponent implements OnInit {
 
     const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password);    
 
-    
-    (await this.iddockServ.saveIdDock(seed, this.type, nvs)).subscribe(res => {
+    const nonce = 0;
+    const id = (this.type == 'people' ? this.walletAddress : this.rfid);
+    (await this.iddockServ.saveIdDock(seed, id, this.type, this.rfid, nvs, nonce)).subscribe(res => {
       console.log('res=', res);
+      if(res && res.ok) {
+        this.myid = res._body._id;
+      }
     });
 
 

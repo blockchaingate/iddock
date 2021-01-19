@@ -1,3 +1,31 @@
-<div *ngIf="data">
-    data Id: {{data._id}}
+<div class="detail-container" *ngIf="data">
+    <div>
+        Id: {{data._id}}
+    </div>
+    <div>
+        selfSign: {{data.selfSign}}
+    </div>    
+
+    <div class="pt-3" *ngIf="data.nvs">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data.nvs">
+              <td>{{item.name}}</td>
+              <td>{{item.value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>   
+    <div>
+        DataHash: {{data.datahash}}
+    </div>
+    <div>
+        Created at: {{data.dateCreated}}
+    </div>
 </div>

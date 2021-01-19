@@ -26,6 +26,11 @@ export class Web3Service {
   }
 
 
+  sha3(s: string) {
+    const web3 = this.getWeb3Provider();
+    return web3.utils.sha3(s);
+  }
+
   getAddRecordABI(sequence: string, hashData: string) {
     const web3 = this.getWeb3Provider();
     const func: any =   {

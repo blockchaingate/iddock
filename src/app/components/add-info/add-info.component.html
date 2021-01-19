@@ -6,7 +6,14 @@
   <div class="container">
     <div class="row justify-content-center py-2">
       <div class="col-md-8 col-sm-12">
-        My ID: {{walletAddress}}
+        My Wallet: {{walletAddress}}
+      </div>
+
+      <div *ngIf="myid">
+        <alert type="success">
+          My ID: {{myid}}
+        </alert>
+        
       </div>
     </div>
     <div class="row justify-content-center">
@@ -19,9 +26,9 @@
             <div class="input-select">
               <select data-trigger="" name="choices-single" class="selectCategory" [(ngModel)]="type">
                 <option placeholder="">Select</option>
-                <option>People</option>
-                <option>Organization</option>
-                <option>Things</option>
+                <option value="people">People</option>
+                <option value="organization">Organization</option>
+                <option value="things">Things</option>
               </select>
             </div>
           </div>
@@ -31,6 +38,16 @@
     </div>
 
     <div class="container lower-form">
+      <div class="row justify-content-center py-3" *ngIf="type == 'organization' || type == 'things'">
+        <div class="col-md-8 col-sm-12">
+          <div class="pb-2">
+            Rfid:
+          </div>
+          <div>
+            <input type="text" class="form-control" placeholder="Rfid" aria-label="Rfid" [(ngModel)]="rfid">
+          </div>
+        </div>
+      </div>      
       <div class="row justify-content-center">
 
         <div class="col-md-8 col-sm-12">
@@ -94,6 +111,12 @@
           <div>
             <button type="button" class="btn btn-primary add-btn" (click)="openModal(template)">ADD NAME & VALUE</button>
           </div>
+          <div class="py-3" *ngIf="typeMissing">
+            <alert type="danger">
+              Please select type.
+            </alert>  
+          </div>
+        
         </div>
 
         

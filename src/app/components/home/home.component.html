@@ -14,11 +14,10 @@
       <div class="input-field second-wrap">
         <div class="input-select">
           <select data-trigger="" name="choices-single" name="type" [(ngModel)]="type" class="selectCategory">
-            <option placeholder="">ALL</option>
-            <option>ID</option>
-            <option>People</option>
-            <option>Organization</option>
-            <option>Things</option>
+            <option placeholder="" value="all">ALL</option>
+            <option value="people">People</option>
+            <option value="organization">Organization</option>
+            <option value="things">Things</option>
           </select>
         </div>
       </div>
@@ -27,7 +26,7 @@
       </div>
     </div>
   </form>
-  <div class="pt-3" *ngIf="items">
+  <div class="pt-3" *ngIf="people || things || organization">
     <table class="table">
       <thead>
         <tr>
@@ -37,9 +36,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of items">
+        <tr *ngFor="let item of people">
           <th scope="row">
-            <a href="/detail/{{item._id}}">
+            <a href="/detail/people/{{item._id}}">
               {{item._id}}
             </a>
             
@@ -47,6 +46,28 @@
           <td>{{item.datahash}}</td>
           <td>{{item.dateCreated}}</td>
         </tr>
+
+        <tr *ngFor="let item of things">
+          <th scope="row">
+            <a href="/detail/things/{{item._id}}">
+              {{item._id}}
+            </a>
+            
+          </th>
+          <td>{{item.datahash}}</td>
+          <td>{{item.dateCreated}}</td>
+        </tr>   
+        
+        <tr *ngFor="let item of organization">
+          <th scope="row">
+            <a href="/detail/organization/{{item._id}}">
+              {{item._id}}
+            </a>
+            
+          </th>
+          <td>{{item.datahash}}</td>
+          <td>{{item.dateCreated}}</td>
+        </tr>          
       </tbody>
     </table>
   </div>
