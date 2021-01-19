@@ -11,6 +11,7 @@ export class DetailComponent implements OnInit {
     id: string;
     type: string;
     data: any;
+    hash: string;
     constructor(private route: ActivatedRoute, private iddockServ: IddockService) { }
     ngOnInit() {
       this.type = this.route.snapshot.paramMap.get('type');
@@ -21,6 +22,12 @@ export class DetailComponent implements OnInit {
           console.log('rettttt=', ret);
           if(ret && ret.ok) {
             this.data = ret._body;
+            const owner = this.data.owner;
+            this.iddockServ.getHashByAccount(owner, this.id).subscribe(
+              (res: any) => {
+                this.hash = res.hash;
+              }
+            );
           }
         }
       );

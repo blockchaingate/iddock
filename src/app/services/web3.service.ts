@@ -31,6 +31,39 @@ export class Web3Service {
     return web3.utils.sha3(s);
   }
 
+  getHashByAccount(address: string, sequence: string) {
+    const web3 = this.getWeb3Provider();
+    const func: any =   {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "name": "_sequence",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getHashByAccount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+
+    const params = [address, sequence];
+
+    console.log('params=', params);
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;    
+  }
+
   getAddRecordABI(sequence: string, hashData: string) {
     const web3 = this.getWeb3Provider();
     const func: any =   {

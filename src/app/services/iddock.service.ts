@@ -4,6 +4,7 @@ import { Web3Service } from './web3.service';
 import { UtilService } from './util.service';
 import { CoinService } from './coin.service';
 import { KanbanService } from './kanban.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class IddockService {
@@ -40,6 +41,11 @@ export class IddockService {
     return this.http.get(url, false);
   }
   
+  getHashByAccount(owner: string, id: string) {
+    const url = environment.endpoints.kanban + 'ecombar/getHashByAccount/' + owner + '/' + id;
+    return this.http.getRaw(url);
+  }
+   
   getDetail(type: string, id: string) {
     if(!type) {
       type = 'id';
@@ -80,6 +86,7 @@ export class IddockService {
     const data = {
         _id: id,
         selfSign: selfSignString,
+        transferSig: null,
         owner: null,
         rfid: null,
         nvs: nvs,
@@ -88,8 +95,10 @@ export class IddockService {
     }
 
     if(type == 'organization' || type == 'things') {
-      data.owner = 'exgAddress';
+      data.owner = exgAddress;
       data.rfid = rfid;
+      data.selfSign = null;
+      data.transferSig = selfSignString;
     }
     
     const txhex = await this.getTxhex(keyPairsKanban, data);

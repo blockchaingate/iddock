@@ -1,11 +1,21 @@
 <div class="detail-container" *ngIf="data">
     <div>
-        Id: {{data._id}}
+        _id: {{data._id}}
     </div>
-    <div>
+    <div *ngIf="data.selfSign">
         selfSign: {{data.selfSign}}
-    </div>    
-
+    </div> 
+    <div *ngIf="data.transferSig">
+      transferSig: {{data.transferSig}}
+    </div>
+    <div *ngIf="data.owner">
+      Owner: {{data.owner}}
+    </div> 
+    
+    <div *ngIf="data.previousOwner">
+      Previous Owner: {{data.previousOwner}}
+    </div>      
+    
     <div class="pt-3" *ngIf="data.nvs">
         <table class="table">
           <thead>
@@ -25,6 +35,10 @@
     <div>
         DataHash: {{data.datahash}}
     </div>
+
+    <div>
+      Hash in Blockchain: {{hash}}
+  </div>    
     <div>
         Created at: {{data.dateCreated}}
     </div>
