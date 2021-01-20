@@ -20,54 +20,11 @@
           </div>
         </div>
         <div  class="row words center">
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">1.</div>
-            <div  class="word"><code >first</code></div>
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted" *ngFor="let word of mnemonics; let i = index">
+            <div  class="numbox">{{index}}.</div>
+            <div  class="word"><code >{{word}}</code></div>
           </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">2.</div>
-            <div  class="word"><code >armed</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">3.</div>
-            <div  class="word"><code >diet</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">4.</div>
-            <div  class="word"><code >category</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">5.</div>
-            <div  class="word"><code >recall</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">6.</div>
-            <div  class="word"><code >put</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">7.</div>
-            <div  class="word"><code >situate</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">8.</div>
-            <div  class="word"><code >giggle</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">9.</div>
-            <div  class="word"><code >survey</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">10.</div>
-            <div  class="word"><code >monkey</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">11.</div>
-            <div  class="word"><code >fiction</code></div>
-          </div>
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
-            <div  class="numbox">12.</div>
-            <div  class="word"><code >beef</code></div>
-          </div>
+
           <!---->
         </div>
       </div>

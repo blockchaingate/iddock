@@ -15,22 +15,88 @@
           </div>
         </div>
         <div  class="row words center">
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted"
-            *ngFor="let item of [].constructor(12); let i = index">
-          
-            <div  class="numbox">{{i +1}}.</div>
-            <div  class="word"><input class="word-field" type="text"></div>
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">1.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word1"></div>
           </div>
-          <!---->
+
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">2.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word2"></div>
+          </div>
+          
+          
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">3.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word3"></div>
+          </div>
+          
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">4.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word4"></div>
+          </div>
+          
+ 
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">5.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word5"></div>
+          </div>
+
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">6.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word6"></div>
+          </div>
+          
+          
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">7.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word7"></div>
+          </div>
+          
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">8.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word8"></div>
+          </div>
+          
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">9.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word9"></div>
+          </div>
+
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">10.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word10"></div>
+          </div>
+          
+          
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">11.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word11"></div>
+          </div>
+          
+          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted">
+            <div  class="numbox">12.</div>
+            <div  class="word"><input class="word-field" type="text" [(ngModel)]="word12"></div>
+          </div>          
+
         </div>
       </div>
       <br>
       <!-- <div class="justify-content-end">
         <a href='/write-phrases'> <button type="button" class="btn btn-primary">Back</button></a>
       </div> -->
-      <div class="btn-group row">
-        <!-- <a href='/enter-phrases'> <button type="button" class="btn btn-primary">Back</button></a> -->
-        <a href='/set-password' id="next"> <button type="button" class="btn btn-primary">Next</button></a>
+
+      <div style="color: red; margin: 0.5em 1.2em;" *ngIf="clicked">
+        {{"Mnemonics mismatch"}} !
+      </div>      
+      <div class="btn-group row buttons">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+          <a href='/write-phrases'> <button type="button" class="btn btn-primary">Back</button></a> 
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+          <button type="button" class="btn btn-primary" (click)="confirm()">Next</button>
+        </div>
+        
       </div>
       <!-- <br />
       <hr />

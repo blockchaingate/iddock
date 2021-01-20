@@ -14,6 +14,9 @@ export class LoginComponent implements OnInit {
   password: string;
   repassword: string;
   mnemonic: string;
+  pwdUnSatified: boolean;
+  notSame: boolean;
+
 
   constructor(
     private route: Router,
@@ -22,10 +25,19 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.pwdUnSatified = false;
+    this.notSame = false;
   }
 
   login() {
     if(this.password != this.repassword) {
+      return;
+    }
+
+    const globalRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[~`!@#\(\)\$%\^&\*])(?=.{8,})/, 'g');
+
+    if(!globalRegex.test(this.password)) {
+      this.pwdUnSatified = true;
       return;
     }
 

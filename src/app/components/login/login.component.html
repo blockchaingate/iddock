@@ -34,6 +34,13 @@
       </div>
       <br/>
       <hr/>
+      <div style="color: red; margin: 0.5em 1.2em;" *ngIf="notSame">
+        {{"Passord mismatch"}} !
+      </div>  
+      
+      <div style="color: red; margin: 0.5em 1.2em;" *ngIf="pwdUnSatified">
+        {{"Password must be at least 8 characters including at least 1 upper case letter, 1 lower case letter and 1 special character(!@#$%^&*~`)"}} !
+      </div>        
       <br/>
       <div><a href='/write-phrases' >Don't have an account?</a></div>
     </div>

@@ -22,7 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-// import { RegisterComponent } from './components/register/register.component';
+//import { RegisterComponent } from './components/register/register.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { DetailBySequenceIDComponent } from './components/detail-by-sequence-id/detail-by-sequence-id.component';
@@ -37,6 +37,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     HomeComponent,
     DetailBySequenceIDComponent,
     LoginComponent,
+    //RegisterComponent,
     DetailComponent,
     HistoryComponent,
     AddInfoComponent,
