@@ -73,14 +73,49 @@ export class IddockService {
     return -1;
   } 
 
+  async changeOwnerBySequence(seed, sequence: string, type: string, rfid: string, nvs: any, owner: string) {
+
+    let nvsString = JSON.stringify(nvs);
+    if(type == 'organization' || type == 'things') {
+      nvsString = 'rfid=' + rfid + '&' + nvsString;
+    }
+    const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');   
+    
+    const selfSign = this.coinServ.signedMessage(nvsString, keyPairsKanban);
+    const selfSignString = this.utilServ.stripHexPrefix(selfSign.r)  + this.utilServ.stripHexPrefix(selfSign.s) + this.utilServ.stripHexPrefix(selfSign.v);
+    const datahash = this.web3Serv.getHash(nvsString);
+
+    const data = {
+        _id: sequence,
+        selfSign: selfSignString,
+        transferSig: null,
+        owner: null,
+        previousOwner: null,
+        rfid: null,
+        nvs: nvs,
+        datahash: datahash,
+        txhex: ''
+    };
+
+    if(type == 'organization' || type == 'things') {
+      data.previousOwner = keyPairsKanban.address;
+      data.owner = owner;
+      data.rfid = rfid;
+      data.selfSign = null;
+      data.transferSig = selfSignString;
+    }
+    
+    const txhex = await this.getTxhex(keyPairsKanban, data);
+    data.txhex = txhex;
+    return this.saveDock(type, data);    
+  }
+
   async saveIdDockBySequence(seed, sequence: string, type: string, rfid: string, nvs: any) {
     let nvsString = JSON.stringify(nvs);
     if(type == 'organization' || type == 'things') {
       nvsString = 'rfid=' + rfid + '&' + nvsString;
     }
     const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');   
-    const exgAddress = this.utilServ.fabToExgAddress(keyPairsKanban.address);
-
     
     const selfSign = this.coinServ.signedMessage(nvsString, keyPairsKanban);
     const selfSignString = this.utilServ.stripHexPrefix(selfSign.r)  + this.utilServ.stripHexPrefix(selfSign.s) + this.utilServ.stripHexPrefix(selfSign.v);
@@ -98,7 +133,7 @@ export class IddockService {
     }
 
     if(type == 'organization' || type == 'things') {
-      data.owner = exgAddress;
+      data.owner = keyPairsKanban.address;
       data.rfid = rfid;
       data.selfSign = null;
       data.transferSig = selfSignString;

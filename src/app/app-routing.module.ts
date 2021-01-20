@@ -7,6 +7,7 @@ import { AddInfoComponent } from './components/add-info/add-info.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { HistoryComponent } from './components/history/history.component';
+import { OwnerComponent } from './components/owner/owner.component';
 import { DetailBySequenceIDComponent } from './components/detail-by-sequence-id/detail-by-sequence-id.component';
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'detail-by-sequence-id/:type/:id', component: DetailBySequenceIDComponent },
   { path: 'history/:type/:id', component: HistoryComponent },
   { path: 'update-info/:type/:id', component: UpdateInfoComponent },
+  { path: 'owner/:type/:id', component: OwnerComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 

@@ -30,7 +30,9 @@
     <table class="table">
       <thead>
         <tr>
+          
           <th scope="col">ID</th>
+          <th scope="col">Type</th>
           <th scope="col">Created At</th>
           <th scope="col"></th>
         </tr>
@@ -43,6 +45,7 @@
             </a>
             
           </th>
+          <td>{{'People'}}</td>
           <td>{{item.dateCreated}}</td>
           <td>
             <button class="btn" type="button" (click)="update('people', item)">Update</button>
@@ -57,10 +60,12 @@
             </a>
             
           </th>
+          <td>{{'Things'}}</td>
           <td>{{item.dateCreated}}</td>
           <td>
             <button class="btn" type="button" (click)="update('things', item)">Update</button>
             <button class="btn" type="button" (click)="history('things', item)">History</button>
+            <button class="btn" type="button" (click)="owner('things', item)">Owner</button>
           </td>
         </tr>   
         
@@ -71,10 +76,12 @@
             </a>
             
           </th>
+          <td>{{'Organization'}}</td>
           <td>{{item.dateCreated}}</td>
           <td>
             <button class="btn" type="button" (click)="update('organization', item)">Update</button>
             <button class="btn" type="button" (click)="history('organization', item)">History</button>
+            <button class="btn" type="button" (click)="owner('organization', item)">Owner</button>
           </td>
         </tr>          
       </tbody>

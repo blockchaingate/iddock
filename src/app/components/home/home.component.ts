@@ -28,6 +28,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/history/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
   }
 
+  owner(type: string, item: any) {
+    this.router.navigate(['/owner/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+  }
+
   search() {
     this.iddockServ.findAll(this.type, this.id).subscribe(
       (ret) => {

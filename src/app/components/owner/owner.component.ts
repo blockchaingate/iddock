@@ -1,21 +1,23 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { IddockService } from '../../services/iddock.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import { UtilService } from '../../services/util.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { Router } from '@angular/router'
 
 @Component({
-  selector: 'app-update-info',
-  templateUrl: './update-info.component.html',
-  styleUrls: ['./update-info.component.scss']
+  selector: 'app-owner',
+  templateUrl: './owner.component.html',
+  styleUrls: ['./owner.component.scss']
 })
-export class UpdateInfoComponent implements OnInit {
+export class OwnerComponent implements OnInit {
   id: string;
   type: string;
   data: any;
   saveSuccess: boolean;
   wallet: any;
+  newOwner: string;
   walletAddress: string;
   password: string;
   hash: string;
@@ -24,10 +26,10 @@ export class UpdateInfoComponent implements OnInit {
   saveErr: string;
 
   constructor(
+    private router: Router,
     private localSt: LocalStorage, 
     private modalService: BsModalService, 
     private route: ActivatedRoute, 
-    private router: Router,
     private iddockServ: IddockService, 
     public utilServ: UtilService) { }
 
@@ -82,13 +84,6 @@ export class UpdateInfoComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }  
 
-  history(type: string, item: any) {
-    this.router.navigate(['/history/' + type + '/' + this.id]);
-  }
-
-  detail(type: string, item: any) {
-    this.router.navigate(['/detail/' + type + '/' + this.id]);
-  }
   async update() {
 
 
@@ -103,7 +98,7 @@ export class UpdateInfoComponent implements OnInit {
     }
     const sequance = this.data._id.substring(0,42) + (nonce + 1).toString(16);;
 
-    (await this.iddockServ.saveIdDockBySequence(seed, sequance, this.type, this.data.rfid, this.data.nvs)).subscribe(res => {
+    (await this.iddockServ.changeOwnerBySequence(seed, sequance, this.type, this.data.rfid, this.data.nvs, this.newOwner)).subscribe(res => {
       if(res) {
         if(res.ok) {
           this.saveSuccess = true;
@@ -118,6 +113,14 @@ export class UpdateInfoComponent implements OnInit {
       }
     });
 
+  }
+
+  updateItem(type: string, item: any) {
+    this.router.navigate(['/update-info/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+  }
+
+  history(type: string, item: any) {
+    this.router.navigate(['/history/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
   }
 
   confirmPassword() {

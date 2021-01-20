@@ -28,6 +28,7 @@ import { AddInfoComponent } from './components/add-info/add-info.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { DetailBySequenceIDComponent } from './components/detail-by-sequence-id/detail-by-sequence-id.component';
 import { HistoryComponent } from './components/history/history.component';
+import { OwnerComponent } from './components/owner/owner.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 
@@ -41,6 +42,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     //RegisterComponent,
     DetailComponent,
     HistoryComponent,
+    OwnerComponent,
     AddInfoComponent,
     UpdateInfoComponent
     // BrowserAnimationsModule,

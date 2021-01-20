@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IddockService } from '../../services/iddock.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -12,7 +12,7 @@ export class DetailComponent implements OnInit {
     type: string;
     data: any;
     hash: string;
-    constructor(private route: ActivatedRoute, private iddockServ: IddockService) { }
+    constructor(private router: Router, private route: ActivatedRoute, private iddockServ: IddockService) { }
     ngOnInit() {
       this.type = this.route.snapshot.paramMap.get('type');
       this.id = this.route.snapshot.paramMap.get('id');
@@ -23,7 +23,7 @@ export class DetailComponent implements OnInit {
           if(ret && ret.ok) {
             this.data = ret._body;
             const owner = this.data.owner;
-            this.iddockServ.getHashByAccount(owner, this.id).subscribe(
+            this.iddockServ.getHashByAccount(owner, this.data._id).subscribe(
               (res: any) => {
                 this.hash = res.hash;
               }
@@ -31,5 +31,15 @@ export class DetailComponent implements OnInit {
           }
         }
       );
-    }    
+    } 
+    
+    history(type: string, item: any) {
+      this.router.navigate(['/history/' + type + '/' + this.id]);
+    }
+  
+
+
+    update(type: string, item: any) {
+      this.router.navigate(['/update-info/' + type + '/' + this.id]);
+    }       
 }

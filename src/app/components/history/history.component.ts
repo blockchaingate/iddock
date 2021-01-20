@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IddockService } from '../../services/iddock.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-history',
@@ -12,7 +12,7 @@ export class HistoryComponent implements OnInit {
     type: string;
     data: any;
     hash: string;
-    constructor(private route: ActivatedRoute, private iddockServ: IddockService) { }
+    constructor(private router: Router, private route: ActivatedRoute, private iddockServ: IddockService) { }
     ngOnInit() {
       this.type = this.route.snapshot.paramMap.get('type');
       this.id = this.route.snapshot.paramMap.get('id');
@@ -25,5 +25,13 @@ export class HistoryComponent implements OnInit {
           }
         }
       );
+    }   
+    
+    update(type: string, item: any) {
+      this.router.navigate(['/update-info/' + type + '/' + this.id]);
+    }
+  
+    detail(type: string, item: any) {
+      this.router.navigate(['/detail/' + type + '/' + this.id]);
     }    
 }

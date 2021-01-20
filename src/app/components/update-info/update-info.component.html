@@ -1,7 +1,4 @@
 <div class="update-info" *ngIf="data">
-  <!-- <div class="logo">
-    <img src="/assets/img/iddock-final.png" />
-  </div> -->
 
   <div class="container">
 
@@ -30,19 +27,7 @@
       <div class="col-md-8 col-sm-12">
 
         <h1>ID MODIFICATION</h1>
-        <!-- <form>
-          <div class="input-field second-wrap">
-            <div class="input-select">
-              <select data-trigger="" name="choices-single" class="selectCategory">
-                <option placeholder="">Select</option>
-                <option>People</option>
-                <option>Organization</option>
-                <option>Things</option>
-              </select>
-            </div>
-          </div>
 
-        </form> -->
         <div class="note">Note: All Histories Are Traceable</div>
       </div>
     </div>
@@ -51,7 +36,25 @@
 
     <div class="container lower-form" *ngIf="data">
 
+
       <div class="container lower-form">
+        <div class="row justify-content-center py-3 my-id">
+          <div class="col-md-8 col-sm-12">
+            ID: {{id}}
+
+            <button class="btn" type="button" (click)="detail(type, data)">Detail</button>
+            <button class="btn" type="button" (click)="history(type, data)">History</button>                
+          </div>
+          
+        </div>      
+        
+        <div class="row justify-content-center py-3">
+          <div class="col-md-8 col-sm-12">
+            Owner: {{data.owner}}             
+          </div>
+          
+        </div>   
+
         <div class="row justify-content-center py-3" *ngIf="type == 'organization' || type == 'things'">
           <div class="col-md-8 col-sm-12">
             <div class="pb-2">
@@ -66,9 +69,7 @@
       <div class="row justify-content-center">
 
         <div class="col-md-8 col-sm-12">
-          <div class="my-id">
-            MY ID: {{utilServ.exgToFabAddress(data._id.substring(0, 42))}}
-          </div>
+
           <div class="mb-3 row">
             <div class="col-md-3">
               Name
@@ -109,7 +110,7 @@
             
           </div>
           <div>
-            <button type="button" class="btn btn-primary update-btn" (click)="openModal(template)">UPDATE NAME & VALUE</button>
+            <button type="button" class="btn btn-primary update-btn"  [disabled]="data.owner !== walletAddress"  (click)="openModal(template)">UPDATE NAME & VALUE</button>
           </div>
         </div>
 

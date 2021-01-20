@@ -1,4 +1,11 @@
 <div class="detail-container" *ngIf="data">
+
+  <div>
+    ID: {{id}}
+
+    <button class="btn" type="button" (click)="update(type, data)">Update</button>
+    <button class="btn" type="button" (click)="history(type, data)">History</button>          
+  </div>
     <div>
         sequence id: {{data._id}}
     </div>

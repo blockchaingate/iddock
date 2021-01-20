@@ -1,4 +1,11 @@
 <div class="history-container" *ngIf="data">
+
+  <div>
+    ID: {{id}}
+
+    <button class="btn" type="button" (click)="update(type, data)">Update</button>
+    <button class="btn" type="button" (click)="detail(type, data)">History</button>          
+  </div>  
     <table class="table">
         <thead>
           <tr>
