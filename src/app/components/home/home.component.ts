@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IddockService } from '../../services/iddock.service';
 import { UtilService } from '../../services/util.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-home',
@@ -13,17 +14,22 @@ export class HomeComponent implements OnInit {
   people: any;
   things: any;
   organization: any;
-  constructor(private iddockServ: IddockService, private utilServ: UtilService) { }
+  constructor(private router: Router, private iddockServ: IddockService, public utilServ: UtilService) { }
 
   ngOnInit() {
 
   }
+
+  update(type: string, item: any) {
+    this.router.navigate(['/update-info/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+  }
+
+  history(type: string, item: any) {
+    this.router.navigate(['/history/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+  }
+
   search() {
-    console.log('this.id===', this.id);
-    //let internalId = this.utilServ.fabToExgAddress(this.id);
-    let internalId = this.id;
-    internalId = internalId.substring(2);
-    this.iddockServ.findAll(this.type, internalId).subscribe(
+    this.iddockServ.findAll(this.type, this.id).subscribe(
       (ret) => {
         console.log('ret==', ret);
         if(ret && ret.ok) {

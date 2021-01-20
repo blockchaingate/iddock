@@ -1,14 +1,35 @@
-<div class="update-info ">
+<div class="update-info" *ngIf="data">
   <!-- <div class="logo">
     <img src="/assets/img/iddock-final.png" />
   </div> -->
 
   <div class="container">
+
+    <div class="row justify-content-center py-2">
+      <div class="col-md-8 col-sm-12">
+        My Wallet: {{walletAddress}}
+      </div>
+
+      <div *ngIf="saveSuccess">
+        <alert type="success">
+          Updated successfully.
+        </alert>
+        
+      </div>
+
+      <div *ngIf="saveErr">
+        <alert type="danger">
+          Error: {{saveErr}}
+        </alert>
+        
+      </div>      
+    </div>
+
     <div class="row justify-content-center">
 
       <div class="col-md-8 col-sm-12">
 
-        <h1>ID REGISTRATION</h1>
+        <h1>ID MODIFICATION</h1>
         <!-- <form>
           <div class="input-field second-wrap">
             <div class="input-select">
@@ -26,12 +47,27 @@
       </div>
     </div>
 
-    <div class="container lower-form">
+  
+
+    <div class="container lower-form" *ngIf="data">
+
+      <div class="container lower-form">
+        <div class="row justify-content-center py-3" *ngIf="type == 'organization' || type == 'things'">
+          <div class="col-md-8 col-sm-12">
+            <div class="pb-2">
+              Rfid:
+            </div>
+            <div>
+              <input type="text" class="form-control" placeholder="Rfid" aria-label="Rfid" [(ngModel)]="data.rfid">
+            </div>
+          </div>
+        </div>         
+
       <div class="row justify-content-center">
 
         <div class="col-md-8 col-sm-12">
           <div class="my-id">
-            MY ID: 12345678XXXX
+            MY ID: {{utilServ.exgToFabAddress(data._id.substring(0, 42))}}
           </div>
           <div class="mb-3 row">
             <div class="col-md-3">
@@ -45,37 +81,15 @@
 
             </div>
           </div>
-          <!-- <div class="input-group mb-3 row">
+
+
+          <div class="input-group mb-3 row" *ngFor="let item of data.nvs; let i = index;">
             <div class="col-md-3">
-              <input type="text" class="form-control" placeholder="Name" aria-label="Username">
+              <input type="text" class="form-control" placeholder="Name" aria-label="Username" [(ngModel)]="item.name">
 
             </div>
             <div class="col-md-4">
-              <input type="text" class="form-control" placeholder="Value" aria-label="Server">
-            </div>
-            <div class="col-md-5 select-visiable">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                  value="option1">
-                <label class="form-check-label" for="inlineRadio1">Public</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                  value="option2">
-                <label class="form-check-label" for="inlineRadio2">Encrypted</label>
-              </div>
-
-
-            </div>
-          </div> -->
-
-          <div class="input-group mb-3 row">
-            <div class="col-md-3">
-              <input type="text" class="form-control" placeholder="Name" aria-label="Username">
-
-            </div>
-            <div class="col-md-4">
-              <input type="text" class="form-control" placeholder="Value" aria-label="Server">
+              <input type="text" class="form-control" placeholder="Value" aria-label="Server" [(ngModel)]="item.value">
             </div>
             <div class="col-md-5  select-visiable">
               <div class="form-check form-check-inline">
@@ -89,12 +103,13 @@
                 <label class="form-check-label" for="inlineRadio2">Encrypted</label>
               </div>
 
-              <button class="btn btn-danger" type="button">DELETE</button>
+              <button class="btn btn-danger" type="button" (click)="deleteItem(item)">DELETE</button>
+              <button class="btn btn-primary" type="button" *ngIf="i==data.nvs.length - 1" (click)="addItem()">+</button>
             </div>
-
+            
           </div>
           <div>
-            <button type="button" class="btn btn-primary update-btn">UPDATE NAME & VALUE</button>
+            <button type="button" class="btn btn-primary update-btn" (click)="openModal(template)">UPDATE NAME & VALUE</button>
           </div>
         </div>
 
@@ -103,3 +118,25 @@
     </div>
 
   </div>
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Password</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="py-2">
+        <input type="text" class="form-control" placeholder="Please enter password" type="password" aria-label="Password" [(ngModel)]="password">
+      </div>
+        
+      <div class="py-2">
+        <button class="btn btn-primary" type="button" (click)="confirmPassword()">Confirm</button>
+      </div>
+        
+      <alert type="danger" *ngIf="passwordWrong">
+        Password is wrong.
+      </alert>
+    </div>
+  </ng-template>

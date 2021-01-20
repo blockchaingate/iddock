@@ -31,42 +31,51 @@
       <thead>
         <tr>
           <th scope="col">ID</th>
-          <th scope="col">HASH</th>
           <th scope="col">Created At</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of people">
           <th scope="row">
-            <a href="/detail/people/{{item._id}}">
-              {{item._id}}
+            <a href="/detail/people/{{utilServ.exgToFabAddress(item._id.substring(0, 42))}}">
+              {{utilServ.exgToFabAddress(item._id.substring(0, 42))}}
             </a>
             
           </th>
-          <td>{{item.datahash}}</td>
           <td>{{item.dateCreated}}</td>
+          <td>
+            <button class="btn" type="button" (click)="update('people', item)">Update</button>
+            <button class="btn" type="button" (click)="history('people', item)">History</button>
+          </td>
         </tr>
 
         <tr *ngFor="let item of things">
           <th scope="row">
-            <a href="/detail/things/{{item._id}}">
-              {{item._id}}
+            <a href="/detail/things/{{utilServ.exgToFabAddress(item._id.substring(0, 42))}}">
+              {{utilServ.exgToFabAddress(item._id.substring(0, 42))}}
             </a>
             
           </th>
-          <td>{{item.datahash}}</td>
           <td>{{item.dateCreated}}</td>
+          <td>
+            <button class="btn" type="button" (click)="update('things', item)">Update</button>
+            <button class="btn" type="button" (click)="history('things', item)">History</button>
+          </td>
         </tr>   
         
         <tr *ngFor="let item of organization">
           <th scope="row">
-            <a href="/detail/organization/{{item._id}}">
-              {{item._id}}
+            <a href="/detail/organization/{{utilServ.exgToFabAddress(item._id.substring(0, 42))}}">
+              {{utilServ.exgToFabAddress(item._id.substring(0, 42))}}
             </a>
             
           </th>
-          <td>{{item.datahash}}</td>
           <td>{{item.dateCreated}}</td>
+          <td>
+            <button class="btn" type="button" (click)="update('organization', item)">Update</button>
+            <button class="btn" type="button" (click)="history('organization', item)">History</button>
+          </td>
         </tr>          
       </tbody>
     </table>
@@ -75,6 +84,8 @@
   <br><br><br>
   <div class="add-info"><a href='/add-info' >ID REGISTRATION</a></div>
   <br>
+  <!--
   <div class="add-info"><a href='/update-info' >UPDATE INFORMATION</a></div>
+  -->
 </div>
 <div class="bg"></div>

@@ -48,10 +48,18 @@ export class IddockService {
    
   getDetail(type: string, id: string) {
     if(!type) {
-      type = 'id';
+      type = 'people';
     }
     const url = 'iddock/getDetail/' + type + '/' + id;
     console.log('url=', url);
+    return this.http.get(url, false);
+  }
+
+  getHistory(type: string, id: string) {
+    if(!type) {
+      type = 'people';
+    }
+    const url = 'iddock/getHistory/' + type + '/' + id;
     return this.http.get(url, false);
   }
 
@@ -65,26 +73,21 @@ export class IddockService {
     return -1;
   } 
 
-  async saveIdDock(seed, id: string, type: string, rfid: string, nvs: any, nonce: number) {
+  async saveIdDockBySequence(seed, sequence: string, type: string, rfid: string, nvs: any) {
     let nvsString = JSON.stringify(nvs);
     if(type == 'organization' || type == 'things') {
       nvsString = 'rfid=' + rfid + '&' + nvsString;
     }
     const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b');   
     const exgAddress = this.utilServ.fabToExgAddress(keyPairsKanban.address);
-    //const nonce = await this.getNonce(type, exgAddress);
-    console.log('nonce===', nonce);
-    const hexString = nonce.toString(16);
-    id = type == 'people' ? this.utilServ.fabToExgAddress(id) : this.web3Serv.sha3(id).substring(0, 42) + hexString;
-    
-    console.log('iddddd=', id);
+
     
     const selfSign = this.coinServ.signedMessage(nvsString, keyPairsKanban);
     const selfSignString = this.utilServ.stripHexPrefix(selfSign.r)  + this.utilServ.stripHexPrefix(selfSign.s) + this.utilServ.stripHexPrefix(selfSign.v);
     const datahash = this.web3Serv.getHash(nvsString);
 
     const data = {
-        _id: id,
+        _id: sequence,
         selfSign: selfSignString,
         transferSig: null,
         owner: null,
@@ -104,6 +107,15 @@ export class IddockService {
     const txhex = await this.getTxhex(keyPairsKanban, data);
     data.txhex = txhex;
     return this.saveDock(type, data);
+
+  }
+  async saveIdDock(seed, id: string, type: string, rfid: string, nvs: any, nonce: number) {
+
+    const hexString = nonce.toString(16);
+    id = type == 'people' ? this.utilServ.fabToExgAddress(id) : this.web3Serv.sha3(id).substring(0, 42) + hexString;
+
+    return await this.saveIdDockBySequence(seed, id, type, rfid, nvs);
+
 
   }
 }

@@ -6,7 +6,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
 import { DetailComponent } from './components/detail/detail.component';
-
+import { HistoryComponent } from './components/history/history.component';
+import { DetailBySequenceIDComponent } from './components/detail-by-sequence-id/detail-by-sequence-id.component';
 const routes: Routes = [
   {
     path: 'register',
@@ -17,7 +18,9 @@ const routes: Routes = [
   // { path: 'register', component: RegisterComponent },
   { path: 'add-info', component: AddInfoComponent },
   { path: 'detail/:type/:id', component: DetailComponent },
-  { path: 'update-info', component: UpdateInfoComponent },
+  { path: 'detail-by-sequence-id/:type/:id', component: DetailBySequenceIDComponent },
+  { path: 'history/:type/:id', component: HistoryComponent },
+  { path: 'update-info/:type/:id', component: UpdateInfoComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 

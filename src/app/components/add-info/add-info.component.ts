@@ -16,6 +16,7 @@ export class AddInfoComponent implements OnInit {
   wallet: any;
   type: string;
   password: string;
+  saveErr: string;
   id: string;
   myid: string;
   rfid: string;
@@ -103,14 +104,17 @@ export class AddInfoComponent implements OnInit {
     const id = (this.type == 'people' ? this.walletAddress : this.rfid);
     (await this.iddockServ.saveIdDock(seed, id, this.type, this.rfid, nvs, nonce)).subscribe(res => {
       console.log('res=', res);
-      if(res && res.ok) {
-        this.myid = res._body._id;
+      if(res) {
+        if(res.ok) {
+          this.myid = this.utilServ.exgToFabAddress(res._body._id.substring(0, 42));
+          this.saveErr = '';
+        } else {
+          this.myid = '';
+          this.saveErr = 'Duplicated id';
+        }
+        
       }
     });
-
-
-
-
 
   }
 

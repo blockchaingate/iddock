@@ -15,7 +15,16 @@
         </alert>
         
       </div>
+
+      <div *ngIf="saveErr">
+        <alert type="danger">
+          Error: {{saveErr}}
+        </alert>
+        
+      </div>      
     </div>
+
+    
     <div class="row justify-content-center">
 
       <div class="col-md-8 col-sm-12">
@@ -84,30 +93,7 @@
               <button class="btn btn-primary" type="button" *ngIf="i==nameValuePairs.length - 1" (click)="addItem()">+</button>
             </div>
           </div>
-          <!--
-          <div class="input-group mb-3 row">
-            <div class="col-md-3">
-              <input type="text" class="form-control" placeholder="Name" aria-label="Username">
 
-            </div>
-            <div class="col-md-4">
-              <input type="text" class="form-control" placeholder="Value" aria-label="Server">
-            </div>
-            <div class="col-md-5  select-visiable">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <label class="form-check-label" for="inlineRadio1">Public</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <label class="form-check-label" for="inlineRadio2">Encrypted</label>
-              </div>
-              
-              <button class="btn btn-primary" type="button">+</button>
-            </div>
-            
-          </div>
-        -->
           <div>
             <button type="button" class="btn btn-primary add-btn" (click)="openModal(template)">ADD NAME & VALUE</button>
           </div>

@@ -65,7 +65,6 @@ export class Web3Service {
   }
 
   getAddRecordABI(sequence: string, hashData: string) {
-    const web3 = this.getWeb3Provider();
     const func: any =   {
       "constant": false,
       "inputs": [
@@ -96,7 +95,6 @@ export class Web3Service {
   async signAbiHexWithPrivateKey(abiHex: string, keyPair: any, address: string, nonce: number,
     value = 0, options = { gasPrice: 0, gasLimit: 0 }) {
     // console.log('abiHex before', abiHex);
-    console.log('keyPair===', keyPair);
     if (abiHex.startsWith('0x')) {
       abiHex = abiHex.slice(2);
     }
@@ -129,7 +127,6 @@ export class Web3Service {
 
     const privKey = keyPair.privateKeyBuffer.privateKey;
 
-    let txhex = '';
 
     const customCommon = Common.forCustomChain(
       environment.chains.ETH.chain,
@@ -144,7 +141,7 @@ export class Web3Service {
 
     tx.sign(privKey);
     const serializedTx = tx.serialize();
-    txhex = '0x' + serializedTx.toString('hex');
+    const txhex = '0x' + serializedTx.toString('hex');
     return txhex;
 
     /*
