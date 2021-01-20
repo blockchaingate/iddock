@@ -88,8 +88,11 @@ export class UpdateInfoComponent implements OnInit {
 
 
     const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password);    
-
-    const nonce = parseInt(this.data._id.substring(42));
+    console.log('this.data=', this.data);
+    let nonce = parseInt(this.data._id.substring(42));
+    if(!nonce) {
+      nonce = 0;
+    }
     const sequance = this.data._id.substring(0,42) + (nonce + 1).toString(16);;
 
     (await this.iddockServ.saveIdDockBySequence(seed, sequance, this.type, this.data.rfid, this.data.nvs)).subscribe(res => {

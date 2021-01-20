@@ -8,7 +8,12 @@
       <div class="col-md-8 col-sm-12">
         My Wallet: {{walletAddress}}
       </div>
+      <div class="col-md-8 col-sm-12">
+        Gas: {{gas}}
 
+        <span class="warningMsg pr-2" *ngIf="gas<0.01">{{"No enough gas in exchange, please add gas to trade"}}.</span>
+        <button class="btn button btn-outline btn-basic-outline btn-fixed-width" *ngIf="(gas<=0)" (click)="getFreeGas(getFreeGasTemplate)">{{"Get free Gas" }}</button>        
+      </div>
       <div *ngIf="myid">
         <alert type="success">
           My ID: {{myid}}
@@ -19,6 +24,20 @@
       <div *ngIf="saveErr">
         <alert type="danger">
           Error: {{saveErr}}
+        </alert>
+        
+      </div>  
+      
+      <div *ngIf="getFreeGasResult == 1">
+        <alert type="success">
+          You will get 2 free Gas shortly
+        </alert>
+        
+      </div>
+
+      <div *ngIf="getFreeGasResult == -1">
+        <alert type="danger">
+          You failed to get 2 free gas
         </alert>
         
       </div>      
@@ -133,3 +152,40 @@
       </alert>
     </div>
   </ng-template>
+
+
+
+
+
+  <ng-template #getFreeGasTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Get free FAB</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="getFreeGasModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div *ngIf="!error">
+        <div class="form-group">
+            <label for="exampleInputPassword1" class="text-dark">{{'Question'}}</label>
+            <div class="text-muted">
+                {{question}}
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword2" class="text-dark">{{'Answer' }}</label>
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="answer" id="displayPwdconfirm" placeholder="{{'Type answer'}}">
+        </div>
+      </div>
+      <div *ngIf="error" class="text-muted">
+          {{error}}
+      </div>
+      <div class="modal-footer justify-content-center" *ngIf="!error">
+        <button class="btn py-2 px-5" type="submit" (click)="onSubmit()"> {{'Confirm' }} </button>
+      </div>      
+    </div>
+  </ng-template>
+

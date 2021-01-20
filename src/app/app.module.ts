@@ -17,6 +17,7 @@ import { KanbanService } from './services/kanban.service';
 import { StorageService } from './services/storage.service';
 import { UtilService } from './services/util.service';
 import { HttpService } from './services/http.service';
+import { AirdropService } from './services/airdrop.service';
 import { IddockService } from './services/iddock.service';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -65,6 +66,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     StorageService,
     UtilService,
     HttpService,
+    AirdropService,
     IddockService
   ],
   bootstrap: [AppComponent]

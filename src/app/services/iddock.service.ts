@@ -112,7 +112,7 @@ export class IddockService {
   async saveIdDock(seed, id: string, type: string, rfid: string, nvs: any, nonce: number) {
 
     const hexString = nonce.toString(16);
-    id = type == 'people' ? this.utilServ.fabToExgAddress(id) : this.web3Serv.sha3(id).substring(0, 42) + hexString;
+    id = (type == 'people' ? this.utilServ.fabToExgAddress(id) : this.web3Serv.sha3(id).substring(0, 42)) + hexString;
 
     return await this.saveIdDockBySequence(seed, id, type, rfid, nvs);
 

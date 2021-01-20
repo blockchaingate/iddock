@@ -4,6 +4,9 @@ import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UtilService } from '../../services/util.service';
 import { IddockService } from '../../services/iddock.service';
+import { KanbanService } from '../../services/kanban.service';
+import { HttpClient} from '@angular/common/http';
+import { AirdropService } from '../../services/airdrop.service';
 
 @Component({
   selector: 'app-add-info',
@@ -18,20 +21,38 @@ export class AddInfoComponent implements OnInit {
   password: string;
   saveErr: string;
   id: string;
+  gas: number;
   myid: string;
   rfid: string;
+  error: any;
   typeMissing: boolean;
   walletAddress: string;
   nameValuePairs: any;
+  publicIP: string;
+  question: string;
+  getFreeGasResult: number;
+  questionair_id: string;
+  answer: string;
+
   modalRef: BsModalRef;
+  getFreeGasModalRef: BsModalRef;
   passwordWrong: boolean;
   constructor(
+    private http: HttpClient,
+    private airdropServ: AirdropService,
     private localSt: LocalStorage, 
+    private kanbanServ: KanbanService,
     private modalService: BsModalService, 
     private iddockServ: IddockService,
     private utilServ: UtilService) { }
 
   ngOnInit() {
+    this.getFreeGasResult = 0;
+    this.http.get('https://api.ipify.org?format=json').subscribe(data => {
+      this.publicIP=data['ip'];
+
+     
+    });
     this.type = 'people';
     this.typeMissing = false;
     this.passwordWrong = false;
@@ -73,7 +94,47 @@ export class AddInfoComponent implements OnInit {
     const addresses = this.wallet.addresses;
     const walletAddressItem = addresses.filter(item => item.name == 'FAB')[0];
     this.walletAddress = walletAddressItem.address;
+    this.refreshGas();
   }
+
+  getFreeGas(template: TemplateRef<any>) {
+
+    this.error = null;
+    this.airdropServ.getQuestionair(this.walletAddress, this.publicIP).subscribe(
+        (res: any) => {
+            if(res) {
+                const data = res._body;
+                if(res.ok) {
+                    
+                    console.log('data=', data);
+                    this.question = data.question;
+                    this.questionair_id = data._id;
+
+                    this.getFreeGasModalRef = this.modalService.show(template);
+                } else {
+                    this.error = data;
+                }
+
+            }
+        }
+    ); 
+  }
+
+  refreshGas() {
+    this.kanbanServ.getKanbanBalance(this.utilServ.fabToExgAddress(this.walletAddress)).subscribe(
+        (resp: any) => {
+            // console.log('resp=', resp);
+            const fab = this.utilServ.stripHexPrefix(resp.balance.FAB);
+            this.gas = this.utilServ.hexToDec(fab) / 1e18;
+
+        },
+        error => {
+            // console.log('errorrrr=', error);
+        }
+    );
+}
+
+
 
   openModal(template: TemplateRef<any>) {
     if(!this.type) {
@@ -130,5 +191,24 @@ export class AddInfoComponent implements OnInit {
 
   warnPwdErr() {
       this.passwordWrong = true;
-  }    
+  }   
+  
+  onSubmit() {
+    this.airdropServ.answerQuestionair(this.walletAddress, this.questionair_id, this.answer).subscribe(
+        (res: any) => {
+            if(res) {
+                if(res.ok) {
+                  this.getFreeGasResult = 1;
+                } else {
+                  this.getFreeGasResult = -1;
+                }
+                
+
+                this.getFreeGasModalRef.hide();
+            } 
+                        
+        }
+    );
+}  
+
 }
