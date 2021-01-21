@@ -73,7 +73,7 @@ export class IddockService {
     return -1;
   } 
 
-  async changeOwnerBySequence(seed, sequence: string, type: string, rfid: string, nvs: any, owner: string) {
+  async changeOwnerBySequence(seed, sequence: string, type: string, rfid: string, nvs: any, parents: any, owner: string) {
 
     let nvsString = JSON.stringify(nvs);
     if(type == 'organization' || type == 'things') {
@@ -93,6 +93,7 @@ export class IddockService {
         previousOwner: null,
         rfid: null,
         nvs: nvs,
+        parents: parents,
         datahash: datahash,
         txhex: ''
     };
@@ -110,7 +111,7 @@ export class IddockService {
     return this.saveDock(type, data);    
   }
 
-  async saveIdDockBySequence(seed, sequence: string, type: string, rfid: string, nvs: any) {
+  async saveIdDockBySequence(seed, sequence: string, type: string, rfid: string, nvs: any, parents: any) {
     let nvsString = JSON.stringify(nvs);
     if(type == 'organization' || type == 'things') {
       nvsString = 'rfid=' + rfid + '&' + nvsString;
@@ -128,6 +129,7 @@ export class IddockService {
         owner: null,
         rfid: null,
         nvs: nvs,
+        parents: null,
         datahash: datahash,
         txhex: ''
     }
@@ -137,6 +139,7 @@ export class IddockService {
       data.rfid = rfid;
       data.selfSign = null;
       data.transferSig = selfSignString;
+      data.parents = parents
     }
     
     const txhex = await this.getTxhex(keyPairsKanban, data);
@@ -144,12 +147,12 @@ export class IddockService {
     return this.saveDock(type, data);
 
   }
-  async saveIdDock(seed, id: string, type: string, rfid: string, nvs: any, nonce: number) {
+  async saveIdDock(seed, id: string, type: string, rfid: string, nvs: any, parents: any, nonce: number) {
 
     const hexString = nonce.toString(16);
     id = (type == 'people' ? this.utilServ.fabToExgAddress(id) : this.web3Serv.sha3(id).substring(0, 42)) + hexString;
 
-    return await this.saveIdDockBySequence(seed, id, type, rfid, nvs);
+    return await this.saveIdDockBySequence(seed, id, type, rfid, nvs, parents);
 
 
   }

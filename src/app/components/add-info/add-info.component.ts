@@ -21,6 +21,29 @@ export class AddInfoComponent implements OnInit {
   password: string;
   saveErr: string;
   id: string;
+  parents: any;
+
+  _hasParents: boolean;
+  get hasParents(): boolean {
+      return this._hasParents;
+  }
+  set hasParents(value: boolean) {
+      this._hasParents = value;
+      console.log('value for hasParents=', value);
+      if(value) {
+        if(!this.parents) {
+          this.parents = [
+            {
+              _id: '',
+              qty: 0,
+              typ: ''
+            }
+          ];
+          console.log('parents=', this.parents);
+        }
+      }
+  }
+
   gas: number;
   myid: string;
   rfid: string;
@@ -47,6 +70,7 @@ export class AddInfoComponent implements OnInit {
     private utilServ: UtilService) { }
 
   ngOnInit() {
+    this.hasParents = false;
     this.getFreeGasResult = 0;
     this.http.get('https://api.ipify.org?format=json').subscribe(data => {
       this.publicIP=data['ip'];
@@ -134,7 +158,15 @@ export class AddInfoComponent implements OnInit {
     );
 }
 
-
+addParentItem() {
+  this.parents.push(
+    {
+      _id: '',
+      qty: 0,
+      typ: ''
+    }    
+  );
+}
 
   openModal(template: TemplateRef<any>) {
     if(!this.type) {
@@ -163,11 +195,13 @@ export class AddInfoComponent implements OnInit {
 
     const nonce = 0;
     const id = (this.type == 'people' ? this.walletAddress : this.rfid);
-    (await this.iddockServ.saveIdDock(seed, id, this.type, this.rfid, nvs, nonce)).subscribe(res => {
-      console.log('res=', res);
+    (await this.iddockServ.saveIdDock(seed, id, this.type, this.rfid, nvs, this.parents,  nonce)).subscribe(res => {
+      console.log('ress=', res);
       if(res) {
         if(res.ok) {
+          console.log('res.body._id=', res._body._id);
           this.myid = this.utilServ.exgToFabAddress(res._body._id.substring(0, 42));
+          console.log('this.myid=', this.myid);
           this.saveErr = '';
         } else {
           this.myid = '';

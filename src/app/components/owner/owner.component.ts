@@ -98,7 +98,7 @@ export class OwnerComponent implements OnInit {
     }
     const sequance = this.data._id.substring(0,42) + (nonce + 1).toString(16);;
 
-    (await this.iddockServ.changeOwnerBySequence(seed, sequance, this.type, this.data.rfid, this.data.nvs, this.newOwner)).subscribe(res => {
+    (await this.iddockServ.changeOwnerBySequence(seed, sequance, this.type, this.data.rfid, this.data.nvs, this.data.parents, this.newOwner)).subscribe(res => {
       if(res) {
         if(res.ok) {
           this.saveSuccess = true;

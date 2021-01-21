@@ -67,6 +67,10 @@ export class UpdateInfoComponent implements OnInit {
     this.data.nvs = this.data.nvs.filter(pair => pair != item);
   }
 
+  deleteParentItem(item) {
+    this.data.parents = this.data.parents.filter(parentItem => parentItem != item);
+  }
+  
   addItem() {
     const item = {
       name: '',
@@ -103,7 +107,7 @@ export class UpdateInfoComponent implements OnInit {
     }
     const sequance = this.data._id.substring(0,42) + (nonce + 1).toString(16);;
 
-    (await this.iddockServ.saveIdDockBySequence(seed, sequance, this.type, this.data.rfid, this.data.nvs)).subscribe(res => {
+    (await this.iddockServ.saveIdDockBySequence(seed, sequance, this.type, this.data.rfid, this.data.parents, this.data.nvs)).subscribe(res => {
       if(res) {
         if(res.ok) {
           this.saveSuccess = true;
