@@ -184,6 +184,16 @@ export class UtilService {
         return address;
     }    
 
+    sequenceId2ObjectId(sequenceId: string) {
+        const buf = Buffer.from(sequenceId, 'hex');
+        return bs58.encode(buf);
+    }
+
+    ObjectId2SequenceId(objectId: string) {
+        const bytes = bs58.decode(objectId);
+        return bytes.toString('hex');
+    }
+
     stripHexPrefix(str) {
         if (str && (str.length > 2) && (str[0] === '0') && (str[1] === 'x')) {
             return str.slice(2);

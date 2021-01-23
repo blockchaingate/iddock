@@ -136,7 +136,7 @@ export class AddInfoComponent implements OnInit {
 
                     this.getFreeGasModalRef = this.modalService.show(template);
                 } else {
-                    this.error = data;
+                    this.saveErr = data;
                 }
 
             }
@@ -193,14 +193,14 @@ addParentItem() {
 
     const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password);    
 
-    const nonce = 0;
-    const id = (this.type == 'people' ? this.walletAddress : this.rfid);
-    (await this.iddockServ.saveIdDock(seed, id, this.type, this.rfid, nvs, this.parents,  nonce)).subscribe(res => {
+    //const nonce = 0;
+    //const id = (this.type == 'people' ? this.walletAddress : this.rfid);
+    (await this.iddockServ.addIdDock(seed, this.type, this.rfid, nvs, this.parents)).subscribe(res => {
       console.log('ress=', res);
       if(res) {
         if(res.ok) {
           console.log('res.body._id=', res._body._id);
-          this.myid = this.utilServ.exgToFabAddress(res._body._id.substring(0, 42));
+          this.myid = this.utilServ.sequenceId2ObjectId(res._body._id.substring(0, 60));
           console.log('this.myid=', this.myid);
           this.saveErr = '';
         } else {

@@ -5,6 +5,8 @@ import { UtilService } from './util.service';
 import { CoinService } from './coin.service';
 import { KanbanService } from './kanban.service';
 import { environment } from 'src/environments/environment';
+import { min } from 'bn.js';
+import { getLocaleExtraDayPeriodRules } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class IddockService {
@@ -16,25 +18,67 @@ export class IddockService {
     private http: HttpService
     ) { }
 
-   async getTxhex(keyPairsKanban, data: any) {
-     const id = data._id;
-    console.log('id=', id);
+    getTypeId(type: string) {
+      if(type == 'people') {
+        return 0;
+      } else 
+      if(type == 'organization') {
+        return 1;
+      }
+      return 2;
+    }
+
+   async getAddTxhex(keyPairsKanban, type: string, data: any) {
+
     const hash = data.datahash;
-    console.log('hash=', hash);
-    const abiHex = this.web3Serv.getAddRecordABI(id, hash);
-   // const abiHex = this.web3Serv.getAddRecordABI('111', '222');
-    const recordAddress = this.kanbanServ.getRecordAddress();
+    const typeId = this.getTypeId(type);
+
+    const abiHex = this.web3Serv.getCreateIDABI(typeId, hash);
+
+    const recordAddress = await this.kanbanServ.getRecordAddress();
     const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
     const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, recordAddress, nonce, 0, null);
     return txKanbanHex;
  
   }
 
+  async getUpdateTxhex(keyPairsKanban, id: string, type: string, data: any) {
 
+    const hash = data.datahash;
+
+    const abiHex = this.web3Serv.getUpdateIDABI(id, hash);
+
+    const recordAddress = await this.kanbanServ.getRecordAddress();
+    const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
+    const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, recordAddress, nonce, 0, null);
+    return txKanbanHex;
+ 
+  }
+
+  async getChangeOwnerTxhex(keyPairsKanban, id: string, newOwner: string) {
+
+    const abiHex = this.web3Serv.getChangeOwnerABI(id, newOwner);
+
+    const recordAddress = await this.kanbanServ.getRecordAddress();
+    const nonce = await this.kanbanServ.getTransactionCount(this.utilServ.fabToExgAddress(keyPairsKanban.address));
+    const txKanbanHex = await this.web3Serv.signAbiHexWithPrivateKey(abiHex, keyPairsKanban, recordAddress, nonce, 0, null);
+    return txKanbanHex;
+ 
+  }
   saveDock(type: string, data: any) {
     const url = 'iddock/Create/' + type;  
     return this.http.post(url, data, false);   
   }
+
+  updateDock(type: string, id: string, data: any) {
+    const url = 'iddock/Update/' + type + '/' + id;  
+    return this.http.post(url, data, false);   
+  }  
+  
+  updateOwner(type: string, id: string, data: any) {
+    const url = 'iddock/ChangeOwner/' + type + '/' + id;  
+    return this.http.post(url, data, false);   
+  }  
 
   findAll(type: string, id: string) {
     const url = 'iddock/findById/' + type + '/' + id;
@@ -42,8 +86,8 @@ export class IddockService {
   }
   
   getHashByAccount(owner: string, id: string) {
-    const url = environment.endpoints.kanban + 'ecombar/getHashByAccount/' + owner + '/' + id;
-    return this.http.getRaw(url);
+    const url = 'iddock/getDetailBySequenceID/' + owner + '/' + id;
+    return this.http.get(url, false);
   }
    
   getDetail(type: string, id: string) {
@@ -106,7 +150,7 @@ export class IddockService {
       data.transferSig = selfSignString;
     }
     
-    const txhex = await this.getTxhex(keyPairsKanban, data);
+    const txhex = await this.getAddTxhex(keyPairsKanban, type,  data);
     data.txhex = txhex;
     return this.saveDock(type, data);    
   }
@@ -142,7 +186,7 @@ export class IddockService {
       data.parents = parents
     }
     
-    const txhex = await this.getTxhex(keyPairsKanban, data);
+    const txhex = await this.getAddTxhex(keyPairsKanban, type, data);
     data.txhex = txhex;
     return this.saveDock(type, data);
 
@@ -155,6 +199,103 @@ export class IddockService {
     return await this.saveIdDockBySequence(seed, id, type, rfid, nvs, parents);
 
 
+  }
+
+  clean(obj) {
+    for (var propName in obj) {
+      if (obj[propName] === null || obj[propName] === undefined) {
+        delete obj[propName];
+      }
+    }
+    return obj
+  }
+
+  getHashSign(keyPair, data: any) {
+    const obj = this.clean(data);
+    let nvsString = JSON.stringify(obj);
+
+    const selfSign = this.coinServ.signedMessage(nvsString, keyPair);
+    const sign = this.utilServ.stripHexPrefix(selfSign.r)  + this.utilServ.stripHexPrefix(selfSign.s) + this.utilServ.stripHexPrefix(selfSign.v);
+    const datahash = this.web3Serv.getHash(nvsString);    
+
+    return [datahash, sign];
+  }
+
+
+  async addIdDock(seed, type: string, rfid: string, nvs: any, parents: any) {
+    const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b'); 
+
+    const data = {
+      _id: null,
+      owner: null,
+      sign: null,
+      rfid: null,
+      parents: null,
+      nvs: nvs,
+      dateCreated: new Date().toISOString(),
+      lastUpdated: null,
+      datahash: null,
+      txhex: null,
+    };
+
+    if(type != 'people') {
+      data.rfid = rfid;
+      data.parents = parents;
+    }    
+
+    const [datahash, sign] = this.getHashSign(keyPairsKanban, data);
+    if(type != 'people') {
+      data.owner = keyPairsKanban.address;
+    }
+    data.datahash = datahash;
+    data.sign = sign;
+
+    const txhex = await this.getAddTxhex(keyPairsKanban, type, data);
+    data.txhex = txhex;
+
+    return this.saveDock(type, data); 
+  }
+
+  async updateIdDock(seed, id: string, type: string, rfid: string, nvs: any, parents: any) {
+    const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b'); 
+
+    const data = {
+      _id: null,
+      sign: null,
+      rfid: null,
+      parents: null,
+      nvs: nvs,
+      dateCreated: new Date().toISOString(),
+      lastUpdated: null,
+      datahash: null,
+      txhex: null,
+    };
+
+    if(type != 'people') {
+      data.rfid = rfid;
+      data.parents = parents;
+    }    
+
+    const [datahash, sign] = this.getHashSign(keyPairsKanban, data);
+    data.datahash = datahash;
+    data.sign = sign;
+
+    const txhex = await this.getUpdateTxhex(keyPairsKanban,id, type, data);
+    data.txhex = txhex;
+
+    return this.updateDock(type, id, data);     
+  }
+
+  async changeOwner(seed, id: string, type: string, newOwner: string) {
+    const keyPairsKanban = this.coinServ.getKeyPairs('FAB', seed, 0, 0, 'b'); 
+
+    const txhex = await this.getChangeOwnerTxhex(keyPairsKanban,id, newOwner);
+    const data = {
+      newOwner: newOwner,
+      txhex: txhex
+    };
+    
+    return this.updateOwner(type, id, data);        
   }
 }
 

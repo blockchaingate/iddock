@@ -91,14 +91,9 @@ export class OwnerComponent implements OnInit {
 
 
     const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password);    
-    console.log('this.data=', this.data);
-    let nonce = parseInt(this.data._id.substring(42));
-    if(!nonce) {
-      nonce = 0;
-    }
-    const sequance = this.data._id.substring(0,42) + (nonce + 1).toString(16);;
 
-    (await this.iddockServ.changeOwnerBySequence(seed, sequance, this.type, this.data.rfid, this.data.nvs, this.data.parents, this.newOwner)).subscribe(res => {
+
+    (await this.iddockServ.changeOwner(seed, this.id, this.type, this.newOwner)).subscribe(res => {
       if(res) {
         if(res.ok) {
           this.saveSuccess = true;
@@ -116,11 +111,11 @@ export class OwnerComponent implements OnInit {
   }
 
   updateItem(type: string, item: any) {
-    this.router.navigate(['/update-info/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+    this.router.navigate(['/update-info/' + type + '/' + this.id]);
   }
 
   history(type: string, item: any) {
-    this.router.navigate(['/history/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+    this.router.navigate(['/history/' + type + '/' + this.id]);
   }
 
   confirmPassword() {

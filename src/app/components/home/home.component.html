@@ -40,8 +40,8 @@
       <tbody>
         <tr *ngFor="let item of people">
           <th scope="row">
-            <a href="/detail/people/{{utilServ.exgToFabAddress(item._id.substring(0, 42))}}">
-              {{utilServ.exgToFabAddress(item._id.substring(0, 42))}}
+            <a href="/detail/people/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+              {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
             </a>
             
           </th>
@@ -55,8 +55,8 @@
 
         <tr *ngFor="let item of things">
           <th scope="row">
-            <a href="/detail/things/{{utilServ.exgToFabAddress(item._id.substring(0, 42))}}">
-              {{utilServ.exgToFabAddress(item._id.substring(0, 42))}}
+            <a href="/detail/things/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+              {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
             </a>
             
           </th>
@@ -71,8 +71,8 @@
         
         <tr *ngFor="let item of organization">
           <th scope="row">
-            <a href="/detail/organization/{{utilServ.exgToFabAddress(item._id.substring(0, 42))}}">
-              {{utilServ.exgToFabAddress(item._id.substring(0, 42))}}
+            <a href="/detail/organization/{{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}">
+              {{utilServ.sequenceId2ObjectId(item._id.substring(0, 60))}}
             </a>
             
           </th>

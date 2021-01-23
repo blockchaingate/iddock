@@ -112,8 +112,11 @@
 
 
 
-
-          <div *ngIf="data.parents">
+          <div class="form-check py-2" *ngIf="type != 'people'">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="hasParents">
+            <label class="form-check-label" for="exampleCheck1">Parents</label>
+          </div>
+          <div *ngIf="hasParents">
             <div>
               Parents information:
             </div>
@@ -128,7 +131,9 @@
               <div class="col-md-3">
                 Type
               </div>
-            </div>            
+            </div>    
+            
+            
             <div class="input-group mb-3 row" *ngFor="let item of data.parents; let i = index;">
               <div class="col-md-3">
                 <input type="text" class="form-control" placeholder="Id" aria-label="Id" [(ngModel)]="item._id">
@@ -150,7 +155,7 @@
 
 
           <div>
-            <button type="button" class="btn btn-primary update-btn"  [disabled]="data.owner !== walletAddress"  (click)="openModal(template)">UPDATE NAME & VALUE</button>
+            <button type="button" class="btn btn-primary update-btn"  [disabled]="data.owner && (data.owner !== walletAddress)"  (click)="openModal(template)">UPDATE NAME & VALUE</button>
           </div>
         </div>
 

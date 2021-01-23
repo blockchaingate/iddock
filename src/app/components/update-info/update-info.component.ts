@@ -23,6 +23,28 @@ export class UpdateInfoComponent implements OnInit {
   modalRef: BsModalRef;
   saveErr: string;
 
+  _hasParents: boolean;
+  get hasParents(): boolean {
+      return this._hasParents;
+  }
+  set hasParents(value: boolean) {
+      this._hasParents = value;
+      console.log('value for hasParents=', value);
+      if(value) {
+        if(!this.data.parents) {
+          this.data.parents = [
+            {
+              _id: '',
+              qty: 0,
+              typ: ''
+            }
+          ];
+          console.log('parents=', this.data.parents);
+        }
+      }
+  }
+
+
   constructor(
     private localSt: LocalStorage, 
     private modalService: BsModalService, 
@@ -30,6 +52,16 @@ export class UpdateInfoComponent implements OnInit {
     private router: Router,
     private iddockServ: IddockService, 
     public utilServ: UtilService) { }
+
+    addParentItem() {
+      this.data.parents.push(
+        {
+          _id: '',
+          qty: 0,
+          typ: ''
+        }    
+      );
+    }
 
   ngOnInit() {
 
@@ -100,14 +132,17 @@ export class UpdateInfoComponent implements OnInit {
 
 
     const seed = this.utilServ.aesDecryptSeed(this.wallet.encryptedSeed, this.password);    
+
+    /*
     console.log('this.data=', this.data);
     let nonce = parseInt(this.data._id.substring(42));
     if(!nonce) {
       nonce = 0;
     }
-    const sequance = this.data._id.substring(0,42) + (nonce + 1).toString(16);;
+    const sequance = this.data._id.substring(0,42) + (nonce + 1).toString(16);
+    */
 
-    (await this.iddockServ.saveIdDockBySequence(seed, sequance, this.type, this.data.rfid, this.data.parents, this.data.nvs)).subscribe(res => {
+    (await this.iddockServ.updateIdDock(seed, this.id, this.type, this.data.rfid, this.data.nvs, this.data.parents)).subscribe(res => {
       if(res) {
         if(res.ok) {
           this.saveSuccess = true;

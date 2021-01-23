@@ -21,18 +21,21 @@ export class HomeComponent implements OnInit {
   }
 
   update(type: string, item: any) {
-    this.router.navigate(['/update-info/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+    this.router.navigate(['/update-info/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
   }
 
   history(type: string, item: any) {
-    this.router.navigate(['/history/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+    this.router.navigate(['/history/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
   }
 
   owner(type: string, item: any) {
-    this.router.navigate(['/owner/' + type + '/' + this.utilServ.exgToFabAddress(item._id.substring(0, 42))]);
+    this.router.navigate(['/owner/' + type + '/' + this.utilServ.sequenceId2ObjectId(item._id.substring(0, 60))]);
   }
 
   search() {
+    if(!this.type) {
+      this.type = 'all';
+    }
     this.iddockServ.findAll(this.type, this.id).subscribe(
       (ret) => {
         console.log('ret==', ret);

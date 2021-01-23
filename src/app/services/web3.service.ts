@@ -64,20 +64,167 @@ export class Web3Service {
     return abiHex;    
   }
 
-  getAddRecordABI(sequence: string, hashData: string) {
-    const func: any =   {
+/*
+IDDock: 0x2b30b638528c9f7c3ba140f200de8fe03ab29498
+abi:
+[
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_objectID",
+        "type": "bytes30"
+      },
+      {
+        "name": "_newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "changeOwner",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_type",
+        "type": "bytes2"
+      },
+      {
+        "name": "_hashData",
+        "type": "bytes32"
+      }
+    ],
+    "name": "createID",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_objectID",
+        "type": "bytes30"
+      },
+      {
+        "name": "_hashData",
+        "type": "bytes32"
+      }
+    ],
+    "name": "updateID",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "_objectID",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "_sequenceID",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "_hashData",
+        "type": "bytes32"
+      }
+    ],
+    "name": "CreateID",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "_objectID",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "_sequenceID",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "_hashData",
+        "type": "bytes32"
+      }
+    ],
+    "name": "UpdateID",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "_objectID",
+        "type": "bytes30"
+      },
+      {
+        "indexed": false,
+        "name": "_newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "ChangeOwner",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_sequenceID",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getHashDataBySequenceID",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+] 
+*/
+
+  getCreateIDABI(typeId: number, hashData: string) {
+    const func: any = {
       "constant": false,
       "inputs": [
         {
-          "name": "_sequence",
-          "type": "bytes32"
+          "name": "_type",
+          "type": "bytes2"
         },
         {
           "name": "_hashData",
           "type": "bytes32"
         }
       ],
-      "name": "addRecord",
+      "name": "createID",
       "outputs": [
         
       ],
@@ -85,13 +232,70 @@ export class Web3Service {
       "stateMutability": "nonpayable",
       "type": "function"
     };  
-    const params = [sequence, hashData];
+    const params = ['0x' + typeId.toString(16), hashData];
 
-    console.log('params=', params);
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }
-  
+ 
+  getUpdateIDABI(objectID: string, hashData: string) {
+    const sequenceID = this.utilServ.ObjectId2SequenceId(objectID);
+    const func: any =  {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_objectID",
+          "type": "bytes30"
+        },
+        {
+          "name": "_hashData",
+          "type": "bytes32"
+        }
+      ],
+      "name": "updateID",
+      "outputs": [
+        
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };  
+    const params = ['0x' + sequenceID, hashData];
+
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }  
+
+  getChangeOwnerABI(objectID: string, newOwner: string) {
+    newOwner = this.utilServ.fabToExgAddress(newOwner);
+    const sequenceID = this.utilServ.ObjectId2SequenceId(objectID);
+    const func: any = {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_objectID",
+          "type": "bytes30"
+        },
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "changeOwner",
+      "outputs": [
+        
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };  
+
+    const params = ['0x' + sequenceID, newOwner];
+    console.log('params for getChangeOwnerABI=', params);
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }  
+
   async signAbiHexWithPrivateKey(abiHex: string, keyPair: any, address: string, nonce: number,
     value = 0, options = { gasPrice: 0, gasLimit: 0 }) {
     // console.log('abiHex before', abiHex);
