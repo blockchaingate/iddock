@@ -21,6 +21,7 @@ import { AirdropService } from './services/airdrop.service';
 import { IddockService } from './services/iddock.service';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 //import { RegisterComponent } from './components/register/register.component';
@@ -30,7 +31,7 @@ import { DetailBySequenceIDComponent } from './components/detail-by-sequence-id/
 import { HistoryComponent } from './components/history/history.component';
 import { OwnerComponent } from './components/owner/owner.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
-import { AlertModule } from 'ngx-bootstrap/alert';
+
 
 @NgModule({
   declarations: [

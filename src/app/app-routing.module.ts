@@ -5,10 +5,11 @@ import { LoginComponent } from './components/login/login.component';
 //import { RegisterComponent } from './components/register/register.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
-import { DetailComponent } from './components/detail/detail.component';
 import { HistoryComponent } from './components/history/history.component';
 import { OwnerComponent } from './components/owner/owner.component';
+import { DetailComponent } from './components/detail/detail.component';
 import { DetailBySequenceIDComponent } from './components/detail-by-sequence-id/detail-by-sequence-id.component';
+
 const routes: Routes = [
   {
     path: 'register',
