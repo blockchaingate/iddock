@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
 })
 export class HomeComponent implements OnInit {
   id: string;
-  type: string;
+  type = 'all';
   people: any;
   things: any;
   organization: any;
@@ -33,9 +33,6 @@ export class HomeComponent implements OnInit {
   }
 
   search() {
-    if(!this.type) {
-      this.type = 'all';
-    }
     this.iddockServ.findAll(this.type, this.id).subscribe(
       (ret) => {
         console.log('ret==', ret);

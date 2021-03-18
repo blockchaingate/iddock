@@ -4,7 +4,7 @@ import { EnterPhrasesComponent } from './components/enter-phrases/enter-phrases.
 import { WritePhrasesComponent } from './components/write-phrases/write-phrases.component';
 import { SetPasswordComponent } from './components/set-password/set-password.component';
 import { FormsModule } from '@angular/forms';
-import {RegisterRoutes } from './register.routing'
+import { RegisterRoutes } from './register.routing'
 import { BrowserModule } from '@angular/platform-browser'
 
 @NgModule({

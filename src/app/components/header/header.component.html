@@ -1,19 +1,16 @@
 <div class="menu">
-  <ul>
-    <li>
-      <a [routerLink]="['/']">Home</a>
-    </li>
-    <li>
-      <a>About</a>
-    </li>
-    <li>
-      <a>Help</a>
-    </li>
-    <li>
-      <a [routerLink]="['/login']">Login</a>
-    </li>
-  </ul>
+    <ul>
+        <li>
+            <a [routerLink]="['/']">{{"Home"| translate}}</a>
+        </li>
+        <li>
+            <a [routerLink]="['/account']">{{"Account"| translate}}</a>
+        </li>
+        <li>
+            <a [routerLink]="['/about']">{{"About"| translate}}</a>
+        </li>
+        <li>
+            <a [routerLink]="['/help']">{{"Help"| translate}}</a>
+        </li>
+    </ul>
 </div>
-<!-- <p>
-  header works!
-</p> -->

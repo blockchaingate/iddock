@@ -1,14 +1,13 @@
-
 import { NgModule } from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import  {RegisterModule} from './modules/register/register.module'
+import { RegisterModule } from './modules/register/register.module'
 //import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { WalletService } from './services/wallet.service';
@@ -23,7 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
+import { AccountComponent } from './components/account/account.component';
 //import { RegisterComponent } from './components/register/register.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
 import { DetailComponent } from './components/detail/detail.component';
@@ -31,7 +30,12 @@ import { DetailBySequenceIDComponent } from './components/detail-by-sequence-id/
 import { HistoryComponent } from './components/history/history.component';
 import { OwnerComponent } from './components/owner/owner.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -39,7 +43,7 @@ import { UpdateInfoComponent } from './components/update-info/update-info.compon
     HeaderComponent,
     HomeComponent,
     DetailBySequenceIDComponent,
-    LoginComponent,
+    AccountComponent,
     //RegisterComponent,
     DetailComponent,
     HistoryComponent,
@@ -58,7 +62,16 @@ import { UpdateInfoComponent } from './components/update-info/update-info.compon
     FormsModule,
     ModalModule.forRoot(),
     AlertModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot(
+      {
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      }
+    ),
   ],
   providers: [
     WalletService,

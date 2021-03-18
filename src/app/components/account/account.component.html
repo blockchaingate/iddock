@@ -1,0 +1,41 @@
+<div class="container login-page">
+    <div class="row justify-content-center">
+
+        <div class="col-md-6 col-sm-12 text-white">
+            <h1>{{"Import account"| translate}}</h1>
+            <h4>{{"AccountNote1"| translate}}: <a href="https://exchangily.com">{{"Exchangily website."|translate}}</a></h4>
+            <h4>{{"AccountNote2"| translate}}</h4>
+            <div novalidate="" class="user-form ng-pristine ng-invalid ng-touched">
+                <div class="form-group"><label for="exampleInputEmail1">{{"Account name"| translate}}</label>
+                    <input type="text" [(ngModel)]="name" aria-describedby="emailHelp" class="form-control transparent-input ng-untouched ng-pristine ng-invalid" placeholder="{{'Type account name'|translate}}">
+                    <!---->
+                </div>
+                <div class="form-group"><label for="exampleInputPassword1">{{"Local password"| translate}}</label><input type="password" autocomplete="off" [(ngModel)]="password" class="form-control transparent-input ng-untouched ng-pristine ng-invalid" placeholder="{{'Type local password'|translate}}">
+                    <!---->
+                </div>
+                <div class="form-group"><label for="exampleInputPassword2">{{"Confirm local password"|translate}}</label><input type="password" autocomplete="off" [(ngModel)]="repassword" class="form-control transparent-input ng-pristine ng-valid ng-touched" placeholder="{{'Type local password again'|translate}}">
+                    <div class="error text-danger smallfont ng-star-inserted" *ngIf="password!=repassword">{{"Password doesn't match"| translate}} ! </div>
+                    <!---->
+                </div>
+                <div class="form-group"><label for="exampleInputEmail1">{{"Seed phrase, seperated by space"|translate}}</label><textarea [(ngModel)]="mnemonic" name="seedphrase" rows="5" class="form-control transparent-input ng-untouched ng-pristine ng-invalid"></textarea>
+                    <!---->
+                </div>
+                <div class="justify-content-end">
+                    <button type="button" class="btn btn-primary" (click)="import()">{{"Import"| translate}}</button>
+                </div>
+            </div>
+            <br/>
+            <hr/>
+            <div style="color: red; margin: 0.5em 1.2em;" *ngIf="notSame">
+                {{"Passord mismatch"}} !
+            </div>
+
+            <div style="color: red; margin: 0.5em 1.2em;" *ngIf="pwdUnSatified">
+                {{"Password must be at least 8 characters including at least 1 upper case letter, 1 lower case letter and 1 special character(!@#$%^&*~`)"}} !
+            </div>
+
+            <div><a href='/write-phrases'>{{"Don't have an account"| translate}} ?</a></div>
+        </div>
+
+    </div>
+</div>

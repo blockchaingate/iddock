@@ -4,11 +4,11 @@ import { WalletService } from '../../services/wallet.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-account',
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class AccountComponent implements OnInit {
 
   name: string;
   password: string;
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.notSame = false;
   }
 
-  login() {
+  import() {
     if(this.password != this.repassword) {
       return;
     }

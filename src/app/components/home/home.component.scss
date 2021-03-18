@@ -1,4 +1,3 @@
-
 html {
     line-height: 1.15;
     /* 1 */
@@ -23,31 +22,37 @@ textarea {
     /* 2 */
 }
 
+
 /**
    * Show the overflow in IE.
    * 1. Show the overflow in Edge.
    */
+
 button,
 input {
     /* 1 */
     overflow: visible;
 }
 
+
 /**
    * Remove the inheritance of text transform in Edge, Firefox, and IE.
    * 1. Remove the inheritance of text transform in Firefox.
    */
+
 button,
 select {
     /* 1 */
     text-transform: none;
 }
 
+
 /**
    * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
    *    controls in Android 4.
    * 2. Correct the inability to style clickable types in iOS and Safari.
    */
+
 button,
 html [type="button"],
 [type="reset"],
@@ -56,9 +61,11 @@ html [type="button"],
     /* 2 */
 }
 
+
 /**
    * Remove the inner border and padding in Firefox.
    */
+
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
@@ -67,16 +74,21 @@ button::-moz-focus-inner,
     padding: 0;
 }
 
+
 /**
    * Restore the focus styles unset by the previous rule.
    */
+
 button:-moz-focusring,
 [type="button"]:-moz-focusring,
 [type="reset"]:-moz-focusring,
 [type="submit"]:-moz-focusring {
     outline: 1px dotted ButtonText;
 }
+
+
 /*=====  End of Choices  ======*/
+
 * {
     box-sizing: border-box;
 }
@@ -100,16 +112,13 @@ button {
     background-position: center center;
     padding: 15px;
     margin-top: -30px;
-
     .logo {
         padding-bottom: 10px;
-
-        img{
+        img {
             max-width: 200px;
         }
     }
-
-    .desc{
+    .desc {
         padding-bottom: 30px;
         font-size: 20px;
         color: #777;
@@ -205,12 +214,7 @@ button {
     height: 100%;
 }
 
-.home-main
-    form
-    .inner-form
-    .input-field.second-wrap
-    .choices__inner
-    .choices__item.choices__item--selectable.choices__placeholder {
+.home-main form .inner-form .input-field.second-wrap .choices__inner .choices__item.choices__item--selectable.choices__placeholder {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
@@ -348,7 +352,7 @@ button {
     overflow: hidden;
 }
 
-.add-info{
+.add-info {
     padding: 10px 20px;
     text-transform: uppercase;
     cursor: pointer;
@@ -356,14 +360,18 @@ button {
     text-shadow: 1px 1px 1px #fff;
     transition: all 0.3s ease-out;
     border-radius: 10px;
-    a{
+    a {
         text-decoration: none;
     }
 }
 
-.add-info:hover{
+.add-info:hover {
     font-size: 22px;
     background-color: #fff;
     border: 3px solid #007bff;
-    
+}
+
+.searchbox {
+    border: 1px solid #8f8f8f;
+    background-color: #afafaf;
 }
