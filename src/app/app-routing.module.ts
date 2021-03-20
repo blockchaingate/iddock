@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
 import { AccountComponent } from './components/account/account.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
 import { UpdateInfoComponent } from './components/update-info/update-info.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterModule)
   },
   { path: 'home', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'account', component: AccountComponent },
   { path: 'add-info', component: AddInfoComponent },
   { path: 'detail/:type/:id', component: DetailComponent },

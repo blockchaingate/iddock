@@ -1,4 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-*{
-    color:#333
+
+@import 'variables';
+@import '../node_modules/bootstrap/scss/bootstrap';
+* {
+    color: #333
+}
+
+.hand {
+    cursor: pointer;
 }

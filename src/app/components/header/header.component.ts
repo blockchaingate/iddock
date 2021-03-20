@@ -43,4 +43,9 @@ export class HeaderComponent implements OnInit {
     this._tranServ.use(this.selectedLan.value);
   }
 
+  selectLan(language: Language) {
+    this.selectedLan = language;
+    localStorage.setItem('_lan', language.value);
+    this._tranServ.use(this.selectedLan.value);
+  }
 }

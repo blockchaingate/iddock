@@ -4,10 +4,10 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
+import { AboutComponent } from './components/about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { RegisterModule } from './modules/register/register.module'
-//import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ApiService } from './services/api.service';
 import { Web3Service } from './services/web3.service';
 import { WalletService } from './services/wallet.service';
@@ -23,7 +23,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { HomeComponent } from './components/home/home.component';
 import { AccountComponent } from './components/account/account.component';
-//import { RegisterComponent } from './components/register/register.component';
 import { AddInfoComponent } from './components/add-info/add-info.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { DetailBySequenceIDComponent } from './components/detail-by-sequence-id/detail-by-sequence-id.component';
@@ -41,23 +40,21 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HeaderComponent,
+    AboutComponent,
     HomeComponent,
     DetailBySequenceIDComponent,
     AccountComponent,
-    //RegisterComponent,
     DetailComponent,
     HistoryComponent,
     OwnerComponent,
     AddInfoComponent,
     UpdateInfoComponent
-    // BrowserAnimationsModule,
-    // BsDropdownModule
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
     RegisterModule,
     FormsModule,
     ModalModule.forRoot(),

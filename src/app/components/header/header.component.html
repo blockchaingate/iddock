@@ -12,5 +12,15 @@
         <li>
             <a [routerLink]="['/help']">{{"Help"| translate}}</a>
         </li>
+        <li>
+            <div class="btn-group" dropdown>
+                <button id="lanbutton" dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-lan">
+                  {{selectedLan.viewValue}} <span class="caret"></span>
+                </button>
+                <div id="dropdown-lan" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="lanbutton">
+                    <li role="menuitem" *ngFor="let language of languages"><a class="dropdown-item hand" (click)="selectLan(language)">{{language.viewValue}}</a></li>
+                </div>
+            </div>
+        </li>
     </ul>
 </div>
