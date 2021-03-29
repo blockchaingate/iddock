@@ -11,33 +11,34 @@
             <div class="col-md-8 col-sm-12">
                 {{"Gas"| translate}}: {{gas}}
 
-                <span class="warningMsg pr-2" *ngIf="gas<0.01">{{"No enough gas in exchange, please add gas to trade"}}.</span>
-                <button class="btn button btn-outline btn-basic-outline btn-fixed-width" *ngIf="(gas<=0)" (click)="getFreeGas(getFreeGasTemplate)">{{"Get free Gas" }}</button>
+                <span class="warningMsg pr-2" *ngIf="gas<0.01"> {{"Nogas"| translate}}</span>
+                <button class="btn button ggas btn-outline btn-basic-outline btn-fixed-width" *ngIf="(gas<=0)" (click)="getFreeGas(getFreeGasTemplate)">{{"Get free gas"| translate}}</button>
+                <a href="https://exchangily.com" target="_blank">{{"Purchase gas"| translate}}</a>
             </div>
             <div *ngIf="myid">
                 <alert type="success">
-                    My ID: {{myid}}
+                    {{"My ID"| translate}}: {{myid}}
                 </alert>
 
             </div>
 
             <div *ngIf="saveErr">
                 <alert type="danger">
-                    Error: {{saveErr}}
+                    {{"Error"| translate}}: {{saveErr}}
                 </alert>
 
             </div>
 
             <div *ngIf="getFreeGasResult == 1">
                 <alert type="success">
-                    You will get 2 free Gas shortly
+                    {{"You will get free Gas shortly"| translate}}
                 </alert>
 
             </div>
 
             <div *ngIf="getFreeGasResult == -1">
                 <alert type="danger">
-                    You failed to get 2 free gas
+                    {{"You failed to get free gas"|translate}}
                 </alert>
 
             </div>
@@ -144,7 +145,7 @@
                     </div>
                     <div class="py-3" *ngIf="typeMissing">
                         <alert type="danger">
-                            Please select type.
+                            {{"Please select type"|translate}}."
                         </alert>
                     </div>
 
@@ -159,33 +160,29 @@
 
     <ng-template #template>
         <div class="modal-header">
-            <h4 class="modal-title pull-left">Password</h4>
+            <h4 class="modal-title pull-left">{{"Password"| translate}}</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
         </div>
         <div class="modal-body">
             <div class="py-2">
-                <input type="text" class="form-control" placeholder="Please enter password" type="password" aria-label="Password" [(ngModel)]="password">
+                <input type="text" class="form-control" placeholder="{{'Please enter password'|translate}}" type="password" aria-label="Password" [(ngModel)]="password">
             </div>
 
             <div class="py-2">
-                <button class="btn btn-primary" type="button" (click)="confirmPassword()">Confirm</button>
+                <button class="btn btn-primary" type="button" (click)="confirmPassword()">{{"Confirm"|translate}}</button>
             </div>
 
             <alert type="danger" *ngIf="passwordWrong">
-                Password is wrong.
+                {{"Password is wrong"| translate}}.
             </alert>
         </div>
     </ng-template>
 
-
-
-
-
     <ng-template #getFreeGasTemplate>
         <div class="modal-header">
-            <h4 class="modal-title pull-left">Get free FAB</h4>
+            <h4 class="modal-title pull-left">{{"Get free gas (FAB)"| translate}}</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="getFreeGasModalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -194,7 +191,7 @@
 
             <div *ngIf="!error">
                 <div class="form-group">
-                    <label for="exampleInputPassword1" class="text-dark">{{'Question'}}</label>
+                    <label for="exampleInputPassword1" class="text-dark">{{'Question$'| translate}}</label>
                     <div class="text-muted">
                         {{question}}
                     </div>
@@ -202,15 +199,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleInputPassword2" class="text-dark">{{'Answer' }}</label>
-                    <input type="text" autocomplete="off" class="form-control" [(ngModel)]="answer" id="displayPwdconfirm" placeholder="{{'Type answer'}}">
+                    <label for="exampleInputPassword2" class="text-dark">{{'Answer'| translate}}</label>
+                    <input type="text" autocomplete="off" class="form-control" [(ngModel)]="answer" id="displayPwdconfirm" placeholder="{{'Type answer'| translate}}">
                 </div>
             </div>
             <div *ngIf="error" class="text-muted">
                 {{error}}
             </div>
             <div class="modal-footer justify-content-center" *ngIf="!error">
-                <button class="btn py-2 px-5" type="submit" (click)="onSubmit()"> {{'Confirm' }} </button>
+                <button class="btn py-2 px-5" type="submit" (click)="onSubmit()"> {{'Confirm'| translate}} </button>
             </div>
         </div>
     </ng-template>
