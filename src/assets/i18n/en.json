@@ -49,6 +49,22 @@
         "P11": "Whether all or a piece of information is confidential or public, and whether it is publicly disclosed conditionally or unconditionally, is determined by the identity owner and cannot be changed by anyone else.",
         "P12": "Authoritative Limitation of Information",
         "P13": "In the blockchain world, there is no absolute authoritative intermediary agency. All authority is a limited concept. For example, if an organization initiates an activity, participants need to be KYC certified by the Monetary Authority. In this case, you need to enter the necessary KYC certification information such as ID card, driver’s license and other information in the identity system, and you need to open this information to the corresponding KYC certification department. Once your identity is recognized by the agency, you can participate in this Events.",
-        "P14": "But another activity initiated by another entity may require other authoritative authentication, and the above recognition is not suitable."
-    }
+        "P14": "But another activity initiated by another entity may require other authoritative authentication, and the above recognition is not suitable.",
+        "P15": "Conclusions",
+        "P16": "The significance of this identity system is to record the unique key value of an identity and the description and change history of the identity information by the identity owner. All of these are permanently recorded on the public blockchain chain and can never be forgery or tampering.",
+        "P17": "When the wallet corresponding to the identity is used in any blockchain ecosystem, such as exchanges, supply-chains, marketplaces, etc., the identity owner can voluntarily associate this system or related application platforms connect this identity system themself to anchor a certain identity, provide historical verification, credit review, awards issuing, or ownership confirmation, etc. In principle, the longer the history of an identity, the higher the absolute value of its value."
+    },
+    "Create New Identity": "Create New Identity",
+    "Step1": "Setp 1: Backup Identity Seed Phrases",
+    "Step1Note": "Please accurately record and securely store the following twelve word mnemonic SEED, do not disclose the mnemonic SEED to anybody else. Disclosure of your mnemonic SEED will result in your account being compromised and you will lose all of your funds. Safely store your mnemonic SEED such that the loss or damage of a device does not impact your ability to access your mnemonic SEED. It is recommended to never send your mnemonic SEED via email or other social communication application. Be sure to only use your mnemonic SEED with the IDDOCK.",
+    "Already have mnemonics? Restore": "Already have mnemonics? Restore",
+    "Next": "Next",
+    "Back": "Back",
+    "Step2": "Setp 2: Verify Mnemonics",
+    "Step2Note": "To make sure that you took down the mnemonics accurately, please enter it in order for verification.",
+    "Step3": 　 "Setp 3: Set Password",
+    "Step3Note": "Please note, this password is only for proectting wallet information in this device, it is not wallet private key.",
+    "WalletName": "Wallet/Identity Name",
+    "Type wallet/identity account name": "Type wallet/identity account name",
+    "Confirm": "Confirm"
 }

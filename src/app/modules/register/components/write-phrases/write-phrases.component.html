@@ -1,42 +1,37 @@
 <div class="container register-page">
-  <div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-    <div class="col-md-8 col-sm-12 text-white">
+        <div class="col-md-8 col-sm-12 text-white">
 
-      <h1>Register</h1>
-      <div  class="">
-        <div  class="header">
-          <h3 >Setp 1: Backup Wallet Seed Phrases</h3>
-        </div>
-        <div  class="row textarea text-light fxHide-sm">
-          <!-- <div  class="col-md-2 col-xs-12"><img 
+            <h1>{{"Create New Identity"| translate}}</h1>
+            <div class="">
+                <div class="header">
+                    <h3>{{"Step1"|translate}}</h3>
+                </div>
+                <div class="row textarea text-light fxHide-sm">
+                    <!-- <div  class="col-md-2 col-xs-12"><img 
                 src="/images/icons/lighting.png" width="100%"></div> -->
-          <div  class="col-md-12 col-xs-12"> Please accurately record and securely store the
-            following twelve word mnemonic SEED, do not disclose the mnemonic SEED to anybody else. Disclosure of your
-            mnemonic SEED will result in your account being compromised and you will lose all of your funds. Safely
-            store your mnemonic SEED such that the loss or damage of a device does not impact your ability to access
-            your mnemonic SEED. It is recommended to never send your mnemonic SEED via email or other social
-            communication application. Be sure to only use your mnemonic SEED with the IDDOCK.
-          </div>
-        </div>
-        <div  class="row words center">
-          <div  class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted" *ngFor="let word of mnemonics; let i = index">
-            <div  class="numbox">{{index}}.</div>
-            <div  class="word"><code >{{word}}</code></div>
-          </div>
+                    <div class="col-md-12 col-xs-12"> {{"Step1Note"| translate}}
+                    </div>
+                </div>
+                <div class="row words center">
+                    <div class="wordbox col-lg-3 col-md-4 col-sm-4 col-6 text-center ng-star-inserted" *ngFor="let word of mnemonics; let i = index">
+                        <div class="numbox">{{index}}.</div>
+                        <div class="word"><code>{{word}}</code></div>
+                    </div>
 
-          <!---->
+                    <!---->
+                </div>
+            </div>
+            <br>
+            <div class="btn-group">
+                <a href='/enter-phrases' id="next"> <button type="button" class="btn btn-primary">{{"Next"| translate}}</button></a>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <div><a href='/login'>{{"Already have mnemonics? Restore"| translate}}</a></div>
         </div>
-      </div>
-      <br>
-      <div class="btn-group">
-        <a href='/enter-phrases' id="next"> <button type="button" class="btn btn-primary">Next</button></a>
-      </div>
-      <br />
-      <hr />
-      <br />
-      <div><a href='/login'>Already have mnemonics? Restore</a></div>
+
     </div>
-
-  </div>
 </div>
