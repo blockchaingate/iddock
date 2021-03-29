@@ -80,5 +80,9 @@
     "You failed to get free gas": "You failed to get free gas",
     "Please enter password": "Please enter password",
     "Please select type": "Please select type",
-    "Password is wrong": "Password is wrong"
+    "Password is wrong": "Password is wrong",
+    "Parents$": "This thing contains children thing(s)",
+    "Quantity": "Quantity",
+    "Type": "Type",
+    "RFID": "RFID"
 }

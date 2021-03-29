@@ -82,5 +82,9 @@
     "Please enter password": "请输入密码",
     "Please select type": "请选择类型",
     "Password is wrong": "密码错误",
-    "Password": "密码"
+    "Password": "密码",
+    "Parents$": "本物包含子物",
+    "Quantity": "数量",
+    "Type": "类型",
+    "RFID": "射频识别码(RFID)"
 }
