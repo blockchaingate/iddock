@@ -38,6 +38,7 @@
         "ethereumjs-common": "1.5.2",
         "ethereumjs-tx": "^2.1.2",
         "ethereumjs-wallet": "^0.6.3",
+        "jsencrypt": "^3.1.0",
         "lodash": "^4.17.20",
         "ngx-bootstrap": "^6.2.0",
         "ngx-paypal": "^6.2.0",

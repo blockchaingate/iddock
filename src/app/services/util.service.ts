@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import { JSEncrypt } from 'jsencrypt/lib';
 import * as bs58 from 'bs58';
 import { environment } from '../../environments/environment';
 import * as createHash from 'create-hash';
 import BigNumber from 'bignumber.js/bignumber';
 import { coin_list } from '../../environments/coins';
 import { MyCoin } from '../models/mycoin';
+import { IJSEncryptOptions } from 'jsencrypt/lib/JSEncrypt';
 
 @Injectable({ providedIn: 'root' })
 export class UtilService {
     auth_code = 'encrypted by crypto-js|';
-    
+
     SHA256(data: string) {
         return CryptoJS.SHA256(data);
     }
@@ -40,19 +42,18 @@ export class UtilService {
     }
 
     convertLiuToFabcoin(amount) {
-
         return Number(Number(amount * 1e-8).toFixed(8));
     }
 
-    hex2Buffer(hexString) {
+    hex2Buffer(hexString: string) {
         const buffer = [];
         for (let i = 0; i < hexString.length; i += 2) {
             buffer[buffer.length] = (parseInt(hexString[i], 16) << 4) | parseInt(hexString[i + 1], 16);
         }
         return Buffer.from(buffer);
     }
-    
-    number2Buffer(num) {
+
+    number2Buffer(num: number) {
         const buffer = [];
         const neg = (num < 0);
         num = Math.abs(num);
@@ -68,7 +69,7 @@ export class UtilService {
             buffer[buffer.length - 1] = top | 0x80;
         }
         return Buffer.from(buffer);
-    }   
+    }
 
     toBigNumber(amount, decimal: number) {
         if (amount === 0 || amount === '0') {
@@ -95,7 +96,6 @@ export class UtilService {
         return amountStrFull;
     }
 
-    
     aesEncrypt(messageToEnc: string, pwd: string) {
         const encrypted = CryptoJS.AES.encrypt(this.auth_code + messageToEnc, pwd).toString();
         return encrypted;
@@ -114,6 +114,51 @@ export class UtilService {
         return '';
     }
 
+    rsaEncryptWithPublicKey(messageToEnc: string, publicKey: string) {
+        // Create a new JSEncrypt object for rsa encryption
+        const options: IJSEncryptOptions = {
+        };
+        var rsaEncrypt = new JSEncrypt(options);
+        // Set public key can only encription.
+        rsaEncrypt.setPublicKey(publicKey);
+        return rsaEncrypt.encrypt(messageToEnc);
+    }
+
+    rsaEncryptWithPrivateKey(messageToEnc: string, privateKey: string) {
+        // Create a new JSEncrypt object for rsa encryption
+        const options: IJSEncryptOptions = {
+        };
+        var rsaEncrypt = new JSEncrypt(options);
+        rsaEncrypt.setPrivateKey(privateKey);
+        return rsaEncrypt.encrypt(messageToEnc);
+    }
+
+    rsaEncryptWithPublicKeyInPem(messageToEnc: string, pem: string) {
+        const options: IJSEncryptOptions = {
+        };
+        var rsaEncrypt = new JSEncrypt(options);
+        rsaEncrypt.setPrivateKey(pem);
+        return rsaEncrypt.encrypt(messageToEnc);
+    }
+
+    rsaDecryptWithPrivateKey(encryptedMsg, privateKey: string) {
+        // Create a new JSEncrypt object for rsa encryption
+        const options: IJSEncryptOptions = {
+        };
+        var rsaEncrypt = new JSEncrypt(options);
+        rsaEncrypt.setPrivateKey(privateKey);
+        return rsaEncrypt.decrypt(encryptedMsg);
+    }
+
+    rsaDncryptWithPrivateInPem(encryptedMsg: string, pem: string) {
+        // Create a new JSEncrypt object for rsa encryption
+        const options: IJSEncryptOptions = {
+        };
+        var rsaEncrypt = new JSEncrypt(options);
+        rsaEncrypt.setPrivateKey(pem);
+        return rsaEncrypt.decrypt(encryptedMsg);
+    }
+
     toPrecision(num: number) {
         return Math.round(num * 10000) / 10000;
     }
@@ -121,6 +166,14 @@ export class UtilService {
     aesEncryptSeed(seed: Buffer, pwd: string) {
         const seedString = seed.toString('base64');
         return this.aesEncrypt(seedString, pwd);
+    }
+
+    aesDecryptSeed(encryted: any, pwd: string) {
+        const decrytedString = this.aesDecrypt(encryted, pwd);
+        if (decrytedString) {
+            return Buffer.from(decrytedString, 'base64');
+        }
+        return null;
     }
 
     showAmount(amount, decimal: number) {
@@ -140,15 +193,7 @@ export class UtilService {
     toNumber(num) {
         return Number(num);
     }
-        
-    aesDecryptSeed(encryted: any, pwd: string) {
-        const decrytedString = this.aesDecrypt(encryted, pwd);
-        if (decrytedString) {
-            return Buffer.from(decrytedString, 'base64');
-        }
-        return null;
-    }  
-    
+
     getCoinNameByTypeId(id: number) {
         for (let i = 0; i < coin_list.length; i++) {
             const coin = coin_list[i];
@@ -156,7 +201,7 @@ export class UtilService {
                 return coin.name;
             }
         }
-        return '';   
+        return '';
     }
 
     fabToExgAddress(address: string) {
@@ -182,7 +227,7 @@ export class UtilService {
         address = bs58.encode(buf);
 
         return address;
-    }    
+    }
 
     sequenceId2ObjectId(sequenceId: string) {
         const buf = Buffer.from(sequenceId, 'hex');
@@ -199,8 +244,8 @@ export class UtilService {
             return str.slice(2);
         }
         return str;
-    } 
-    
+    }
+
     hexToDec(hex: string) {
         if (hex.length === 1) {
             return this.hexCharToDec(hex);
@@ -210,9 +255,55 @@ export class UtilService {
         // console.log('leftHex=' + leftHex);
         // console.log('rightHex=' + rightHex);
         return this.hexToDec(leftHex) * 16 + this.hexCharToDec(rightHex);
-    }   
-    
+    }
+
     hexCharToDec(hexChar: string) {
         return parseInt(hexChar, 16);
-    }    
+    }
+
+    // create a random string in desired length as key for symmetric encryption
+    generateRandomKey(length: number) {
+        // define the characters to pick from
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz*&-%/!?*+=()";
+        var randomstring = '';
+        for (var i = 0; i < length; i++) {
+            var rnum = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum, rnum + 1);
+        }
+        return randomstring;
+    }
+
+    // Asymatric encryption with publicKey
+    encrypt(dataObject, publicKey: string) {
+        // Create a new encryption key (with a specified length)
+        var key = this.generateRandomKey(50);
+
+        // convert data to a json string
+        var dataAsString = JSON.stringify(dataObject);
+
+        // encrypt the data symmetrically 
+        // (the cryptojs library will generate its own 256bit key!!)
+        var aesEncrypted = CryptoJS.AES.encrypt(dataAsString, key);
+
+        // get the symmetric key and initialization vector from
+        // (hex encoded) and concatenate them into one string
+        var aesKey = aesEncrypted.key + ":::" + aesEncrypted.iv;
+        // the data is base64 encoded
+        var encryptedMessage = aesEncrypted.toString();
+
+        // we create a new JSEncrypt object for rsa encryption
+        var rsaEncrypt = new JSEncrypt();
+
+        // we set the public key (which we passed into the function)
+        rsaEncrypt.setPublicKey(publicKey);
+
+        // now we encrypt the key & iv with our public key
+        var encryptedKey = rsaEncrypt.encrypt(aesKey);
+
+        // and concatenate our payload message
+        var payload = encryptedKey + ":::" + encryptedMessage;
+
+        return payload;
+    }
+
 }
