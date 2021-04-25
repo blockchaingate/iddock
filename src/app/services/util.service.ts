@@ -273,8 +273,8 @@ export class UtilService {
         return randomstring;
     }
 
-    // Asymatric encryption with publicKey
-    encrypt(dataObject, publicKey: string) {
+    // Asymatric/symatric encryption with publicKey
+    mixedEncrypt(dataObject, publicKey: string) {
         // Create a new encryption key (with a specified length)
         var key = this.generateRandomKey(50);
 
@@ -292,7 +292,7 @@ export class UtilService {
         var encryptedMessage = aesEncrypted.toString();
 
         // we create a new JSEncrypt object for rsa encryption
-        var rsaEncrypt = new JSEncrypt();
+        var rsaEncrypt = new JSEncrypt({});
 
         // we set the public key (which we passed into the function)
         rsaEncrypt.setPublicKey(publicKey);
